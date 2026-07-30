@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://nexigenstudios.in/sitemap.xml
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /

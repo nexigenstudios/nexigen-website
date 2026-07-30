@@ -1,593 +1,1524 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-<link rel="icon" href="logo.png" type="image/png">
-<link rel="icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
-<link rel="icon" type="image/png" sizes="512x512" href="logo-512.png">  
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Nexigen Studios</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter','Poppins',sans-serif;color:#111;background:#fff;overflow-x:hidden}
-button{font-family:inherit}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes waPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
-@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.fade-in.visible{opacity:1;transform:translateY(0)}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .3s ease;padding:0 6%}
-nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(10px);box-shadow:0 1px 20px rgba(0,0,0,.08)}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px}
-.logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;cursor:pointer}
-.logo span.blue{color:#2563EB}.logo span.gray{color:#888;font-weight:500;font-size:14px;margin-left:4px}
-.desk-nav{display:flex;gap:32px;align-items:center}
-.desk-nav button{background:none;border:none;font-size:14px;font-weight:500;color:#444;cursor:pointer;padding:4px 0;transition:color .2s}
-.desk-nav button:hover{color:#2563EB}
-.btn-cta{background:#111;color:#fff!important;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s}
-.btn-cta:hover{background:#2563EB!important;color:#fff!important}
-.mob-btn{display:none;background:none;border:none;font-size:24px;cursor:pointer}
-.mob-menu{display:none;background:#fff;padding:16px 6%;box-shadow:0 8px 24px rgba(0,0,0,.08);border-top:1px solid #f0f0f0}
-.mob-menu button{display:block;background:none;border:none;font-size:15px;font-weight:500;color:#333;cursor:pointer;padding:10px 0;width:100%;text-align:left}
-.mob-menu .btn-full{background:#111;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;width:100%;text-align:center}
-#home{min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,#fff 60%,#f0f5ff 100%);padding:100px 6% 60px}
-.hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:60px;flex-wrap:wrap;width:100%}
-.hero-text{flex:1 1 420px;animation:fadeUp .8s ease forwards}
-.badge{display:inline-block;background:#EFF6FF;color:#2563EB;font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:.5px}
-.hero-text h1{font-family:'Poppins',sans-serif;font-size:clamp(36px,5vw,60px);font-weight:800;line-height:1.1;margin-bottom:20px;color:#0a0a0a;letter-spacing:-1.5px}
-.hero-text h1 span{color:#2563EB}
-.hero-text p{font-size:17px;color:#555;line-height:1.7;margin-bottom:36px;max-width:460px}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn-primary{background:#111;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-.btn-primary:hover{background:#2563EB;transform:translateY(-2px)}
-.btn-secondary{background:transparent;color:#111;border:2px solid #e0e0e0;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn-secondary:hover{border-color:#2563EB;color:#2563EB}
-.hero-visual{flex:1 1 340px;position:relative;animation:fadeIn 1s ease .3s both}
-.browser-card{background:#fff;border-radius:20px;box-shadow:0 24px 80px rgba(37,99,235,.12),0 8px 32px rgba(0,0,0,.08);overflow:hidden;border:1px solid #f0f0f0}
-.browser-bar{background:#f8f9fa;padding:12px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid #f0f0f0}
-.dot{width:12px;height:12px;border-radius:50%;cursor:pointer;transition:opacity .2s}
-.dot:hover{opacity:.7}
-.url-bar{flex:1;background:#e9ecef;border-radius:4px;height:22px;margin:0 8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888}
-.browser-card img{width:100%;display:block;height:220px;object-fit:cover}
-.browser-stats{padding:20px}
-.browser-metrics{display:flex;justify-content:space-between;margin-bottom:12px}
-.metric{text-align:center}
-.metric-lbl{font-size:12px;color:#999;margin-bottom:2px}
-.metric-val{font-weight:700;font-size:14px}
-.progress-bar{height:6px;background:#f0f0f0;border-radius:3px}
-.progress-fill{width:72%;height:100%;background:linear-gradient(90deg,#2563EB,#60a5fa);border-radius:3px}
-.badge-live{position:absolute;top:-16px;right:-16px;background:#2563EB;color:#fff;border-radius:12px;padding:12px 16px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(37,99,235,.3)}
-.badge-launch{position:absolute;bottom:-16px;left:-16px;background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px}
-.badge-launch span{font-size:20px}
-.badge-launch-lbl{font-size:12px;color:#999}
-.badge-launch-val{font-weight:700;font-size:14px}
-.ticker-wrap{background:#0a0a0a;padding:14px 0;overflow:hidden;white-space:nowrap}
-.ticker-track{display:inline-flex;animation:tickerMove 30s linear infinite}
-.ticker-track:hover{animation-play-state:paused}
-.ticker-item{color:#888;font-size:13px;font-weight:500;padding:0 32px;display:flex;align-items:center;gap:10px}
-.ticker-item span{color:#2563EB}
-.section-tag{color:#2563EB;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
-.section-title{font-family:'Poppins',sans-serif;font-size:clamp(28px,4vw,42px);font-weight:700;color:#0a0a0a;margin-bottom:16px}
-.section-sub{color:#666;font-size:16px;max-width:500px;margin:0 auto}
-.section-center{text-align:center;margin-bottom:60px}
-#services{padding:100px 6%;background:#f8faff}
-.services-grid{max-width:1200px;margin:0 auto}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.service-card{background:#fff;border-radius:16px;padding:32px 28px;border:1px solid #f0f0f0;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
-.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#EFF6FF,#fff);opacity:0;transition:opacity .3s}
-.service-card:hover::before{opacity:1}
-.service-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(37,99,235,.1);border-color:#dbeafe}
-.service-icon{width:52px;height:52px;background:#EFF6FF;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;position:relative;z-index:1}
-.service-card h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;color:#0a0a0a;position:relative;z-index:1}
-.service-card p{color:#666;font-size:14px;line-height:1.7;position:relative;z-index:1}
-.service-tag{margin-top:16px;font-size:12px;font-weight:600;color:#2563EB;background:#EFF6FF;display:inline-block;padding:4px 10px;border-radius:20px;position:relative;z-index:1}
-#process{padding:100px 6%;background:#fff}
-.process-inner{max-width:1100px;margin:0 auto}
-.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:40px;position:relative}
-.process-steps::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,#2563EB,#60a5fa);z-index:0}
-.process-step{text-align:center;padding:0 16px;position:relative;z-index:1}
-.step-circle{width:72px;height:72px;background:#fff;border:3px solid #2563EB;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 20px;box-shadow:0 4px 20px rgba(37,99,235,.15);transition:all .3s}
-.process-step:hover .step-circle{background:#2563EB;transform:scale(1.1)}
-.step-num-badge{position:absolute;top:-8px;right:calc(50% - 44px);background:#2563EB;color:#fff;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.process-step h4{font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px;color:#111}
-.process-step p{font-size:13px;color:#777;line-height:1.6}
-#about{padding:100px 6%;background:#f8faff}
-.about-inner{max-width:1100px;margin:0 auto}
-.about-text p{color:#555;font-size:16px;line-height:1.8;margin-bottom:20px}
-.about-steps{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-.step-badge{display:flex;align-items:center;gap:6px;background:#EFF6FF;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:#2563EB}
-.step-num{background:#2563EB;color:#fff;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
-#pricing{padding:100px 6%;background:#fff}
-.pricing-inner{max-width:1100px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.pricing-card{background:#fff;border-radius:20px;padding:36px 32px;border:2px solid #f0f0f0;transition:all .3s;position:relative}
-.pricing-card.popular{border-color:#2563EB;transform:scale(1.03)}
-.pricing-card:hover{box-shadow:0 20px 60px rgba(37,99,235,.1)}
-.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#2563EB;color:#fff;padding:6px 18px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
-.plan-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;color:#111;margin-bottom:8px}
-.plan-price{font-family:'Poppins',sans-serif;font-weight:800;font-size:42px;color:#0a0a0a;margin:16px 0 4px}
-.plan-price sup{font-size:22px;vertical-align:super}
-.plan-price span{font-size:16px;color:#888;font-weight:400}
-.plan-desc{color:#888;font-size:14px;margin-bottom:24px}
-.plan-features{list-style:none;margin-bottom:32px}
-.plan-features li{padding:8px 0;font-size:14px;color:#444;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;gap:8px}
-.plan-features li::before{content:'✓';color:#2563EB;font-weight:700;font-size:13px}
-.plan-features li.off{color:#bbb}
-.plan-features li.off::before{content:'✕';color:#ddd}
-.btn-plan{width:100%;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;border:2px solid #111;background:transparent;color:#111}
-.btn-plan:hover,.pricing-card.popular .btn-plan{background:#111;color:#fff}
-.pricing-card.popular .btn-plan:hover{background:#2563EB;border-color:#2563EB}
-#reviews{padding:100px 6%;background:#f8faff}
-.reviews-inner{max-width:860px;margin:0 auto}
-.review-card{background:#fff;border-radius:16px;padding:40px 36px;border:1px solid #e8f0fe;transition:all .3s;max-width:640px;margin:0 auto}
-.review-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(37,99,235,.08)}
-.review-quote{color:#2563EB;font-size:28px;margin-bottom:16px}
-.review-card p{color:#444;font-size:15px;line-height:1.8;margin-bottom:24px}
-.review-author{display:flex;align-items:center;gap:12px}
-.review-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #dbeafe;background:#EFF6FF;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.review-name{font-weight:700;font-size:14px;color:#111}
-.review-company{font-size:12px;color:#888}
-.review-stars{margin-left:auto;color:#fbbf24;font-size:14px}
-#faq{padding:100px 6%;background:#fff}
-.faq-inner{max-width:760px;margin:0 auto}
-.faq-list{margin-top:40px}
-.faq-item{background:#fff;border-radius:12px;margin-bottom:12px;border:1px solid #f0f0f0;overflow:hidden;transition:box-shadow .3s}
-.faq-item.open{box-shadow:0 8px 30px rgba(37,99,235,.08)}
-.faq-q{padding:20px 24px;font-weight:600;font-size:15px;color:#111;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq-icon{font-size:20px;color:#2563EB;transition:transform .3s;flex-shrink:0}
-.faq-item.open .faq-icon{transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
-.faq-item.open .faq-a{max-height:300px}
-.faq-a-inner{padding:0 24px 20px;color:#666;font-size:14px;line-height:1.8}
-#contact{padding:100px 6%;background:#f8faff}
-.contact-inner{max-width:1100px;margin:0 auto}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start}
-.contact-info h3{font-family:'Poppins',sans-serif;font-weight:700;font-size:22px;margin-bottom:16px;color:#111}
-.contact-info p{color:#666;font-size:15px;line-height:1.7;margin-bottom:32px}
-.contact-item{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.contact-icon{width:44px;height:44px;background:#EFF6FF;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
-.contact-item span{color:#444;font-size:14px;font-weight:500}
-.social-row{display:flex;gap:10px;margin-top:28px}
-.social-btn{width:40px;height:40px;background:#111;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;cursor:pointer;transition:background .2s;text-decoration:none}
-.social-btn:hover{background:#2563EB}
-.contact-form{background:#fff;border-radius:20px;padding:36px;box-shadow:0 8px 40px rgba(0,0,0,.07);border:1px solid #f0f0f0}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{margin-bottom:18px}
-.form-group label{display:block;font-weight:600;font-size:13px;color:#333;margin-bottom:6px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid #e8e8e8;font-size:14px;color:#333;outline:none;transition:border .2s;font-family:inherit;background:#fff}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#2563EB}
-.form-group textarea{resize:vertical}
-.btn-send{width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-send:hover{background:#1da851}
-.map-wrap{margin-top:48px;border-radius:16px;overflow:hidden;border:1px solid #e8e8e8;height:260px}
-.map-wrap iframe{width:100%;height:260px;border:0;display:block}
-#backTop{position:fixed;bottom:96px;right:28px;z-index:998;width:44px;height:44px;background:#111;color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:background .2s,transform .2s}
-#backTop:hover{background:#2563EB;transform:translateY(-2px)}
-#backTop.show{display:flex}
-footer{background:#0a0a0a;color:#fff;padding:64px 6% 32px}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:48px}
-.footer-brand .logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;margin-bottom:14px}
-.footer-brand p{color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;max-width:240px}
-.footer-social{display:flex;gap:8px}
-.footer-social .s-btn{width:36px;height:36px;background:#1e1e1e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px;cursor:pointer;transition:all .2s;text-decoration:none}
-.footer-social .s-btn:hover{background:#2563EB;color:#fff}
-.footer-col h4{font-weight:700;font-size:15px;margin-bottom:18px;color:#fff}
-.footer-col a{display:block;color:#888;font-size:14px;margin-bottom:10px;cursor:pointer;transition:color .2s;text-decoration:none}
-.footer-col a:hover{color:#fff}
-.newsletter p{color:#888;font-size:14px;margin-bottom:16px;line-height:1.6}
-.newsletter-input{display:flex;background:#1e1e1e;border-radius:10px;overflow:hidden;border:1px solid #333}
-.newsletter-input input{flex:1;background:transparent;border:none;padding:11px 14px;color:#fff;font-size:13px;outline:none}
-.newsletter-input button{background:#2563EB;color:#fff;border:none;padding:11px 16px;cursor:pointer;font-size:13px;font-weight:600;transition:background .2s}
-.newsletter-input button:hover{background:#1d4ed8}
-.footer-bottom{border-top:1px solid #1e1e1e;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-bottom span{color:#666;font-size:13px}
-.footer-bottom a{color:#666;font-size:13px;text-decoration:none;cursor:pointer}
-.footer-bottom a:hover{color:#fff}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;transition:transform .4s ease,opacity .4s;opacity:0;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:768px){
-  .desk-nav{display:none!important}
-  .mob-btn{display:block!important}
-  .form-row{grid-template-columns:1fr}
-  .process-steps::before{display:none}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Nexigen Studios | Website Design & Development Company in Kerala</title>
+  <meta name="description" content="Nexigen Studios is a website design and development company in Kollam, Kerala. We build modern business websites, landing pages and portfolio websites — fast, affordable and built to convert." />
+  <meta name="keywords" content="website design company Kerala, website development Kollam, business website design India, landing page design Kerala, portfolio website development, website redesign services, website maintenance Kerala, web design company India, Nexigen Studios" />
+  <meta name="author" content="Nexigen Studios" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#05070B" />
+  <link rel="canonical" href="https://nexigenstudios.in/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nexigen Studios" />
+  <meta property="og:title" content="Nexigen Studios | Website Design & Development Company in Kerala" />
+  <meta property="og:description" content="Kerala's rising digital studio. We build modern business websites, landing pages and portfolio sites that deliver real results — fast, modern, and built to convert." />
+  <meta property="og:url" content="https://nexigenstudios.in/" />
+  <meta property="og:image" content="https://nexigenstudios.in/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_IN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@nexigenstudios" />
+  <meta name="twitter:title" content="Nexigen Studios | Website Design & Development Company in Kerala" />
+  <meta name="twitter:description" content="Kerala's rising digital studio. Modern websites built to convert." />
+  <meta name="twitter:image" content="https://nexigenstudios.in/og-image.jpg" />
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="IN-KL" />
+  <meta name="geo.placename" content="Kollam, Kerala, India" />
+  <meta name="geo.position" content="8.8868;76.6042" />
+  <meta name="ICBM" content="8.8868, 76.6042" />
+
+  <!-- Favicon Suite -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="msapplication-TileColor" content="#075BFF" />
+  <meta name="msapplication-TileImage" content="android-chrome-192x192.png" />
+
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://images.unsplash.com" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+  <!-- Preload hero image -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=1400&auto=format&fit=crop&q=90" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Schema: ProfessionalService -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Nexigen Studios",
+    "url": "https://nexigenstudios.in",
+    "logo": "https://nexigenstudios.in/logo.png",
+    "description": "Nexigen Studios is a boutique web design studio in Kollam, Kerala specialising in business websites, landing pages, portfolio websites and website maintenance.",
+    "foundingDate": "2026",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kollam",
+      "addressRegion": "Kerala",
+      "addressCountry": "IN"
+    },
+    "telephone": "+917994042319",
+    "email": "nexigenstudios@gmail.com",
+    "areaServed": {"@type": "Country","name": "India"},
+    "contactPoint": {"@type": "ContactPoint","contactType": "Customer Service","telephone": "+917994042319","email": "nexigenstudios@gmail.com","availableLanguage": ["English","Malayalam"]},
+    "sameAs": ["https://instagram.com/nexigenstudios","https://linkedin.com/company/nexigenstudios","https://twitter.com/nexigenstudios"],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Website Services",
+      "itemListElement": [
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Business Website"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Landing Page"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Portfolio Website"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Maintenance & Support"}}
+      ]
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Nexigen Studios",
+    "url": "https://nexigenstudios.in",
+    "inLanguage": "en-IN",
+    "potentialAction": {"@type":"SearchAction","target":"https://nexigenstudios.in/?s={search_term_string}","query-input":"required name=search_term_string"}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://nexigenstudios.in/"},
+      {"@type":"ListItem","position":2,"name":"Services","item":"https://nexigenstudios.in/#services"},
+      {"@type":"ListItem","position":3,"name":"Pricing","item":"https://nexigenstudios.in/#pricing"},
+      {"@type":"ListItem","position":4,"name":"Work","item":"https://nexigenstudios.in/#work"},
+      {"@type":"ListItem","position":5,"name":"Contact","item":"https://nexigenstudios.in/#contact"}
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --near-black:    #05070B;
+      --deep-navy:     #07142B;
+      --royal-blue:    #075BFF;
+      --electric-cyan: #00C8FF;
+      --off-white:     #F5F7FA;
+      --soft-grey:     #9CA6B5;
+      --white:         #FFFFFF;
+      --line:          rgba(156,166,181,0.16);
+      --line-blue:     rgba(7,91,255,0.22);
+      --font-display:  'Space Grotesk', sans-serif;
+      --font-body:     'Inter', sans-serif;
+      --font-mono:     'IBM Plex Mono', monospace;
+      --ease-out:      cubic-bezier(0.16,1,0.3,1);
+      --ease-io:       cubic-bezier(0.76,0,0.24,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--near-black); color: var(--off-white); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; background: none; border: none; font: inherit; }
+    input, textarea, select { font: inherit; }
+
+    /* SKIP */
+    .skip-link { position:fixed; top:-100%; left:1rem; z-index:9999; background:var(--royal-blue); color:#fff; padding:.5rem 1rem; font-family:var(--font-mono); font-size:.75rem; transition:top .2s; }
+    .skip-link:focus { top:1rem; }
+
+    /* LOADER */
+    #loader { position:fixed; inset:0; z-index:9000; background:var(--near-black); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; }
+    #loader-logo { opacity:0; transform:scale(.8); transition:opacity .6s .1s, transform .6s .1s var(--ease-out); }
+    #loader h2 { font-family:var(--font-display); font-size:clamp(1.1rem,3vw,1.6rem); letter-spacing:.4em; opacity:0; transition:opacity .5s .5s; }
+    #loader p  { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.25em; color:var(--soft-grey); opacity:0; transition:opacity .5s .7s; }
+    #loader-bar { position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--royal-blue); transition:width 2s var(--ease-out); }
+
+    /* PROGRESS */
+    #progress-bar { position:fixed; top:0; left:0; height:2px; background:var(--royal-blue); z-index:8000; width:0%; transition:width .1s linear; }
+
+    /* CURSOR */
+    #cursor { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--royal-blue); pointer-events:none; z-index:8500; transform:translate(-50%,-50%); mix-blend-mode:difference; }
+    #cursor-ring { position:fixed; width:36px; height:36px; border-radius:50%; border:1px solid rgba(7,91,255,.45); pointer-events:none; z-index:8499; transform:translate(-50%,-50%); }
+    .cursor-label { position:fixed; pointer-events:none; z-index:8501; background:var(--royal-blue); color:#fff; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; padding:.4rem .75rem; opacity:0; transform:translate(-50%,-50%) scale(.8); transition:opacity .2s,transform .2s; white-space:nowrap; }
+
+    /* BLUEPRINT */
+    #blueprint-overlay { position:fixed; inset:0; z-index:7000; pointer-events:none; opacity:0; transition:opacity .4s; }
+    .blueprint-active #blueprint-overlay { opacity:1; }
+    .bp-grid { width:100%; height:100%; background-image:linear-gradient(to right,rgba(0,200,255,.07) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,200,255,.07) 1px,transparent 1px); background-size:40px 40px; }
+    .bp-label { position:absolute; font-family:var(--font-mono); font-size:.52rem; color:var(--electric-cyan); letter-spacing:.1em; opacity:0; transition:opacity .4s; }
+    .blueprint-active .bp-label { opacity:1; }
+    .bp-x { position:absolute; width:12px; height:12px; border:1px solid var(--electric-cyan); opacity:0; transform:translate(-50%,-50%); transition:opacity .4s; }
+    .bp-x::before,.bp-x::after { content:''; position:absolute; background:var(--electric-cyan); }
+    .bp-x::before { width:1px; height:100%; left:50%; top:0; }
+    .bp-x::after  { height:1px; width:100%; top:50%; left:0; }
+    .blueprint-active .bp-x { opacity:.5; }
+
+    /* NAV */
+    #nav { position:fixed; top:0; width:100%; z-index:6000; padding:1.1rem clamp(1.2rem,4vw,4rem); display:flex; align-items:center; justify-content:space-between; transition:background .4s,border-color .4s,backdrop-filter .4s; border-bottom:1px solid transparent; }
+    #nav.scrolled { background:rgba(5,7,11,.93); backdrop-filter:blur(18px); border-color:var(--line-blue); }
+    .nav-logo { display:flex; align-items:center; gap:.6rem; }
+    .nav-logo-link { display:flex; align-items:center; gap:.55rem; }
+    .nav-logo-img { width:30px; height:30px; object-fit:contain; border-radius:6px; }
+    .nav-wordmark { font-family:var(--font-display); font-size:1.05rem; font-weight:700; letter-spacing:-.02em; color:var(--off-white); }
+    .nav-badge { font-family:var(--font-mono); font-size:.58rem; border:1px solid var(--royal-blue); color:var(--royal-blue); padding:.12rem .38rem; letter-spacing:.08em; }
+    .nav-links { display:flex; gap:2.2rem; list-style:none; }
+    .nav-links a { font-family:var(--font-mono); font-size:.68rem; color:var(--soft-grey); letter-spacing:.08em; transition:color .25s; }
+    .nav-links a:hover { color:var(--royal-blue); }
+    .nav-right { display:flex; align-items:center; gap:1.25rem; }
+    #bp-toggle { display:flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.62rem; color:var(--soft-grey); letter-spacing:.08em; transition:color .25s; }
+    #bp-toggle:hover { color:var(--electric-cyan); }
+    #bp-dot { width:6px; height:6px; border-radius:50%; background:var(--soft-grey); transition:background .3s; flex-shrink:0; }
+    .blueprint-active #bp-dot { background:var(--electric-cyan); }
+    .blueprint-active #bp-toggle { color:var(--electric-cyan); }
+    .btn { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-weight:700; letter-spacing:.1em; transition:background .22s,color .22s,transform .15s; }
+    .btn-outline { font-size:.7rem; color:var(--royal-blue); border:1px solid var(--royal-blue); padding:.6rem 1.2rem; }
+    .btn-outline:hover { background:var(--royal-blue); color:#fff; transform:translateY(-1px); }
+    .btn-solid { font-size:.7rem; background:var(--royal-blue); color:#fff; border:1px solid var(--royal-blue); padding:.6rem 1.2rem; }
+    .btn-solid:hover { background:#1a6fff; transform:translateY(-1px); }
+    .btn-ghost { font-size:.7rem; color:var(--soft-grey); border:1px solid var(--line); padding:.6rem 1.2rem; }
+    .btn-ghost:hover { border-color:var(--royal-blue); color:var(--royal-blue); }
+
+    #hamburger { display:none; flex-direction:column; gap:5px; padding:.45rem; z-index:6100; }
+    #hamburger span { display:block; width:22px; height:1.5px; background:var(--off-white); transition:transform .3s,opacity .3s; }
+    #hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+    #hamburger.open span:nth-child(2) { opacity:0; }
+    #hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+    #mobile-menu { display:none; position:fixed; inset:0; z-index:5900; background:var(--near-black); flex-direction:column; align-items:center; justify-content:center; gap:1.8rem; opacity:0; pointer-events:none; transition:opacity .35s; }
+    #mobile-menu.open { opacity:1; pointer-events:all; }
+    #mobile-menu a { font-family:var(--font-display); font-size:clamp(2rem,8vw,3rem); font-weight:700; color:var(--soft-grey); transition:color .2s; }
+    #mobile-menu a:hover { color:var(--royal-blue); }
+
+    /* UTILS */
+    .container { max-width:1440px; margin:0 auto; padding:0 clamp(1.25rem,5vw,4rem); }
+    .eyebrow { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.25em; color:var(--royal-blue); display:block; margin-bottom:1.25rem; }
+    .section-title { font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,4.5vw,3.6rem); line-height:1.05; letter-spacing:-.025em; }
+    .reveal { opacity:0; transform:translateY(36px); }
+    .divider { width:100%; height:1px; background:var(--line); }
+
+    /* ── HERO ─────────────────────────────────────── */
+    #hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--line); padding-top:68px; }
+    .hero-left { position:relative; overflow:hidden; background:#07101f; }
+    .hero-img { width:100%; height:100%; object-fit:cover; opacity:.65; transform:scale(1.05); transition:transform 8s var(--ease-out),opacity .7s; }
+    .hero-img.loaded { transform:scale(1); }
+    .hero-left-overlay { position:absolute; inset:0; background:linear-gradient(140deg,rgba(5,7,11,.6) 0%,rgba(5,7,11,.15) 60%,transparent 100%); }
+    .hero-glow { position:absolute; bottom:-80px; left:-80px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(7,91,255,.16) 0%,transparent 70%); pointer-events:none; }
+    .hero-coords { position:absolute; bottom:1.75rem; left:1.75rem; font-family:var(--font-mono); font-size:.58rem; color:rgba(255,255,255,.35); letter-spacing:.12em; }
+    .hero-badge { position:absolute; top:1.75rem; left:1.75rem; font-family:var(--font-mono); font-size:.58rem; color:var(--electric-cyan); letter-spacing:.15em; display:flex; align-items:center; gap:.5rem; }
+    .hero-badge::before { content:'✦'; font-size:.5rem; }
+
+    .hero-right { position:relative; overflow:hidden; background:var(--near-black); display:flex; align-items:center; padding:clamp(2rem,5vw,5rem) clamp(2rem,6vw,6rem); }
+    .hero-right::before { content:''; position:absolute; inset:0; background-image:linear-gradient(to right,rgba(0,200,255,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,200,255,.035) 1px,transparent 1px); background-size:40px 40px; }
+    .hero-right::after { content:''; position:absolute; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle,rgba(7,91,255,.09) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .hero-content { position:relative; z-index:1; max-width:540px; }
+    .hero-tag { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.2em; color:var(--electric-cyan); margin-bottom:1.75rem; display:flex; align-items:center; gap:.7rem; }
+    .hero-tag::before { content:''; display:block; width:1.8rem; height:1px; background:var(--electric-cyan); }
+    .hero-headline { font-family:var(--font-display); font-weight:700; font-size:clamp(3rem,5.8vw,5.5rem); line-height:1; letter-spacing:-.035em; margin-bottom:1.75rem; }
+    .hero-headline .l1 { color:var(--off-white); display:block; }
+    .hero-headline .l2 { color:transparent; -webkit-text-stroke:2px var(--royal-blue); display:block; }
+    .hero-headline .l3 { color:var(--royal-blue); display:block; }
+    .hero-sub { font-size:.98rem; color:var(--soft-grey); line-height:1.75; margin-bottom:2.25rem; max-width:420px; }
+    .hero-ctas { display:flex; flex-wrap:wrap; gap:.85rem; margin-bottom:2.25rem; }
+    .hero-note { font-family:var(--font-mono); font-size:.62rem; color:rgba(156,166,181,.45); letter-spacing:.1em; }
+    .scroll-ind { position:absolute; bottom:1.75rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.4rem; font-family:var(--font-mono); font-size:.52rem; color:var(--soft-grey); letter-spacing:.15em; }
+    .scroll-ind::after { content:''; display:block; width:1px; height:2.5rem; background:linear-gradient(to bottom,var(--soft-grey),transparent); animation:si 1.5s ease-in-out infinite; }
+    @keyframes si { 0%,100%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} }
+
+    /* Hero stats card */
+    .hero-stats { position:absolute; bottom:2rem; right:2rem; z-index:5; background:rgba(5,7,11,.75); backdrop-filter:blur(12px); border:1px solid var(--line-blue); padding:1rem 1.25rem; }
+    .hero-stats-title { font-family:var(--font-mono); font-size:.58rem; color:var(--electric-cyan); letter-spacing:.15em; margin-bottom:.85rem; }
+    .hero-stats-row { display:flex; gap:1.25rem; }
+    .hero-stat { text-align:center; }
+    .hero-stat-val { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--off-white); display:block; }
+    .hero-stat-up { color:#22c55e; font-size:.65rem; font-family:var(--font-mono); }
+    .hero-stat-label { font-family:var(--font-mono); font-size:.52rem; color:var(--soft-grey); letter-spacing:.1em; }
+    .hero-live { display:flex; align-items:center; gap:.4rem; margin-top:.85rem; font-family:var(--font-mono); font-size:.55rem; color:#22c55e; letter-spacing:.1em; }
+    .hero-live-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+    /* MARQUEE */
+    #marquee { overflow:hidden; border-bottom:1px solid var(--line); background:var(--near-black); padding:1.1rem 0; }
+    .marquee-track { display:flex; white-space:nowrap; animation:mq 28s linear infinite; }
+    .marquee-track span { font-family:var(--font-display); font-size:.82rem; font-weight:600; letter-spacing:.2em; color:rgba(245,247,250,.13); padding:0 1.4rem; }
+    .marquee-track .dot { color:var(--royal-blue); padding:0; }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-pills { display:flex; justify-content:center; gap:2rem; padding:1.1rem 0; border-bottom:1px solid var(--line); background:var(--near-black); flex-wrap:wrap; }
+    .marquee-pills span { font-family:var(--font-mono); font-size:.62rem; color:var(--soft-grey); letter-spacing:.15em; display:flex; align-items:center; gap:.4rem; }
+    .marquee-pills span::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--royal-blue); flex-shrink:0; }
+
+    /* TEAM AT WORK */
+    #team-at-work { position:relative; overflow:hidden; height:clamp(300px,45vw,540px); border-bottom:1px solid var(--line); }
+    .team-img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; }
+    .team-overlay { position:absolute; inset:0; background:linear-gradient(to right,rgba(5,7,11,.85) 0%,rgba(5,7,11,.4) 55%,rgba(5,7,11,.75) 100%); }
+    .team-grid-overlay { position:absolute; inset:0; background-image:linear-gradient(to right,rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,200,255,.04) 1px,transparent 1px); background-size:40px 40px; }
+    .team-content { position:absolute; inset:0; display:flex; align-items:center; padding:0 clamp(1.5rem,6vw,6rem); }
+    .team-text { max-width:520px; }
+    .team-rule { width:2.5rem; height:2px; background:var(--royal-blue); margin-top:1.75rem; }
+    .team-label-br { position:absolute; bottom:1rem; right:1.5rem; font-family:var(--font-mono); font-size:.52rem; color:rgba(0,200,255,.32); letter-spacing:.12em; }
+
+    /* PHILOSOPHY */
+    #philosophy { background:var(--deep-navy); padding:clamp(5rem,9vw,9rem) 0; overflow:hidden; position:relative; }
+    .phil-bg-word { position:absolute; font-family:var(--font-display); font-size:clamp(8rem,18vw,17rem); font-weight:700; color:transparent; -webkit-text-stroke:1px rgba(7,91,255,.07); top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; user-select:none; }
+    .phil-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; position:relative; z-index:1; }
+    .phil-visual { position:relative; overflow:hidden; aspect-ratio:4/3; border:1px solid var(--line-blue); }
+    .phil-visual img { width:100%; height:100%; object-fit:cover; opacity:.55; }
+    .phil-visual::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(7,20,43,.82) 0%,rgba(7,91,255,.08) 100%); }
+    .phil-visual-lbl { position:absolute; bottom:1rem; left:1rem; z-index:1; font-family:var(--font-mono); font-size:.56rem; color:rgba(0,200,255,.45); letter-spacing:.12em; }
+    .phil-headline { font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,3.5vw,2.8rem); line-height:1.1; letter-spacing:-.02em; color:var(--off-white); margin-bottom:1.75rem; }
+    .phil-body { color:rgba(245,247,250,.62); line-height:1.8; margin-bottom:1.5rem; }
+    .phil-stmt { font-family:var(--font-mono); font-size:.72rem; color:var(--electric-cyan); letter-spacing:.08em; border-left:2px solid var(--royal-blue); padding-left:1rem; line-height:2; }
+
+    /* SERVICES */
+    #services { background:var(--near-black); padding-top:clamp(4.5rem,9vw,9rem); }
+    .services-intro { padding-bottom:3.5rem; border-bottom:1px solid var(--line); }
+    .services-intro .sub { color:var(--soft-grey); max-width:500px; margin-top:1rem; }
+    .svc-panels { }
+    .svc-panel { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid var(--line); overflow:hidden; }
+    .svc-panel.rev { direction:rtl; }
+    .svc-panel.rev > * { direction:ltr; }
+    .svc-media { position:relative; overflow:hidden; aspect-ratio:4/3; background:#0a0f1a; }
+    .svc-media-img { width:100%; height:100%; object-fit:cover; opacity:.52; transition:transform .9s var(--ease-out),opacity .5s; }
+    .svc-panel:hover .svc-media-img { transform:scale(1.06); opacity:.7; }
+    .svc-media-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(5,7,11,.62) 0%,rgba(7,91,255,.07) 100%); }
+    .svc-media-num { position:absolute; bottom:1.25rem; right:1.25rem; font-family:var(--font-mono); font-size:.56rem; color:rgba(7,91,255,.45); letter-spacing:.12em; }
+    .svc-body { padding:clamp(2.75rem,5vw,5rem) clamp(1.75rem,5vw,5rem); display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--line); }
+    .svc-panel.rev .svc-body { border-left:none; border-right:1px solid var(--line); }
+    .svc-lbl { font-family:var(--font-mono); font-size:.62rem; color:rgba(7,91,255,.55); letter-spacing:.15em; margin-bottom:1.1rem; }
+    .svc-title { font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.6rem); line-height:1.05; letter-spacing:-.02em; margin-bottom:.9rem; color:var(--off-white); }
+    .svc-desc { color:var(--soft-grey); line-height:1.75; margin-bottom:1.75rem; }
+    .svc-link { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.68rem; font-weight:700; letter-spacing:.1em; color:var(--royal-blue); border-bottom:1px solid var(--royal-blue); padding-bottom:.18rem; transition:gap .2s,opacity .2s; width:fit-content; }
+    .svc-link:hover { gap:.8rem; opacity:.65; }
+
+    /* PROCESS */
+    #process { background:var(--off-white); padding:clamp(4.5rem,9vw,9rem) 0; }
+    #process .section-title { color:var(--near-black); }
+    #process .eyebrow { color:var(--royal-blue); }
+    .process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:3.5rem; position:relative; }
+    .process-steps::before { content:''; position:absolute; top:1.2rem; left:0; right:0; height:1px; background:linear-gradient(to right,var(--royal-blue),var(--electric-cyan)); }
+    .process-step { padding:2.75rem 1.75rem 2rem; border-right:1px solid rgba(5,7,11,.08); }
+    .process-step:last-child { border-right:none; }
+    .step-num { font-family:var(--font-mono); font-size:.65rem; color:var(--royal-blue); letter-spacing:.1em; margin-bottom:1.1rem; display:block; }
+    .step-title { font-family:var(--font-display); font-weight:700; font-size:1.35rem; color:var(--near-black); margin-bottom:.65rem; }
+    .step-desc { font-size:.88rem; color:#666; line-height:1.7; }
+    .step-bar { height:2px; background:var(--royal-blue); margin-top:1.75rem; width:0; transition:width .55s var(--ease-out); }
+    .process-step:hover .step-bar { width:100%; }
+    .process-visual { margin-top:4.5rem; position:relative; overflow:hidden; border:1px solid var(--line); height:380px; }
+    .process-visual-img { width:100%; height:100%; object-fit:cover; opacity:.38; }
+    .process-visual-overlay { position:absolute; inset:0; background:linear-gradient(to right,rgba(5,7,11,.92) 0%,rgba(5,7,11,.45) 60%,rgba(5,7,11,.88) 100%); }
+    .process-visual-content { position:absolute; inset:0; display:flex; align-items:center; gap:1.5rem; padding:2.5rem; z-index:1; }
+    .wf-block { flex:1; border:1px solid rgba(7,91,255,.18); display:flex; flex-direction:column; gap:.7rem; padding:.9rem; height:180px; }
+    .wf-bar { height:7px; background:rgba(7,91,255,.22); border-radius:1px; }
+    .wf-bar.s { width:38%; } .wf-bar.m { width:62%; }
+    .wf-img { flex:1; background:rgba(7,91,255,.06); border:1px solid rgba(7,91,255,.1); }
+    .process-visual-lbl { position:absolute; bottom:.9rem; right:1.25rem; z-index:1; font-family:var(--font-mono); font-size:.56rem; color:rgba(0,200,255,.38); letter-spacing:.12em; }
+
+    /* PRICING */
+    #pricing { background:var(--near-black); padding:clamp(4.5rem,9vw,9rem) 0; border-top:1px solid var(--line); }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:3.5rem; border:1px solid var(--line); }
+    .pricing-card { padding:2.5rem; border-right:1px solid var(--line); position:relative; overflow:hidden; transition:background .3s; }
+    .pricing-card:last-child { border-right:none; }
+    .pricing-card.featured { background:rgba(7,91,255,.06); border-top:2px solid var(--royal-blue); }
+    .pricing-card.featured::before { content:'MOST POPULAR'; position:absolute; top:1rem; right:1rem; font-family:var(--font-mono); font-size:.52rem; letter-spacing:.15em; color:var(--royal-blue); border:1px solid var(--royal-blue); padding:.2rem .5rem; }
+    .pricing-plan { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.2em; color:var(--royal-blue); margin-bottom:1rem; display:block; }
+    .pricing-name { font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:var(--off-white); margin-bottom:.5rem; }
+    .pricing-price { font-family:var(--font-display); font-weight:700; font-size:clamp(1.8rem,3vw,2.5rem); color:var(--off-white); margin-bottom:.3rem; letter-spacing:-.02em; }
+    .pricing-price span { font-size:1rem; color:var(--soft-grey); font-weight:400; font-family:var(--font-body); }
+    .pricing-range { font-family:var(--font-mono); font-size:.6rem; color:var(--soft-grey); letter-spacing:.1em; margin-bottom:1.75rem; display:block; }
+    .pricing-desc { color:var(--soft-grey); font-size:.88rem; line-height:1.7; margin-bottom:2rem; }
+    .pricing-features { list-style:none; margin-bottom:2.25rem; display:flex; flex-direction:column; gap:.7rem; }
+    .pricing-features li { display:flex; align-items:flex-start; gap:.6rem; font-size:.88rem; color:var(--soft-grey); }
+    .pricing-features li::before { content:'→'; font-family:var(--font-mono); color:var(--royal-blue); font-size:.75rem; flex-shrink:0; margin-top:.05rem; }
+    .pricing-cta { width:100%; padding:.85rem; font-family:var(--font-mono); font-size:.7rem; font-weight:700; letter-spacing:.12em; border:1px solid var(--royal-blue); color:var(--royal-blue); background:transparent; cursor:pointer; transition:background .22s,color .22s; }
+    .pricing-cta:hover,.pricing-card.featured .pricing-cta { background:var(--royal-blue); color:#fff; }
+
+    /* WORK */
+    #work { background:var(--off-white); padding:clamp(4.5rem,9vw,9rem) 0; }
+    #work .section-title { color:var(--near-black); }
+    .work-sub { color:#666; margin-top:1rem; }
+    .work-intro { margin-bottom:4.5rem; }
+    .proj-card { display:grid; grid-template-columns:1fr 1fr; border:1px solid rgba(5,7,11,.1); margin-bottom:3.5rem; overflow:hidden; transition:border-color .28s; }
+    .proj-card:hover { border-color:var(--royal-blue); }
+    .proj-card.rev { direction:rtl; }
+    .proj-card.rev > * { direction:ltr; }
+    .proj-media { position:relative; overflow:hidden; aspect-ratio:4/3; background:#0d1828; cursor:none; }
+    .proj-media-img { width:100%; height:100%; object-fit:cover; transition:transform .9s var(--ease-out),filter .45s; filter:grayscale(18%); }
+    .proj-card:hover .proj-media-img { transform:scale(1.06); filter:grayscale(0%); }
+    .proj-media-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(5,7,11,.55) 0%,transparent 55%); }
+    .proj-body { background:#fff; padding:clamp(2.25rem,5vw,5rem); display:flex; flex-direction:column; justify-content:center; border-left:1px solid rgba(5,7,11,.08); }
+    .proj-card.rev .proj-body { border-left:none; border-right:1px solid rgba(5,7,11,.08); }
+    .proj-num { font-family:var(--font-mono); font-size:.62rem; color:var(--royal-blue); letter-spacing:.15em; margin-bottom:.4rem; }
+    .proj-cat { font-family:var(--font-mono); font-size:.62rem; color:#999; letter-spacing:.12em; margin-bottom:1.35rem; }
+    .proj-title { font-family:var(--font-display); font-weight:700; font-size:clamp(1.5rem,2.8vw,2.2rem); line-height:1.1; letter-spacing:-.02em; color:var(--near-black); margin-bottom:.9rem; }
+    .proj-desc { color:#555; line-height:1.75; margin-bottom:.65rem; font-size:.93rem; }
+    .proj-stmt { font-size:.83rem; color:#888; font-style:italic; margin-bottom:1.75rem; }
+    .proj-ctas { display:flex; flex-wrap:wrap; gap:.85rem; }
+    .btn-dark { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.68rem; font-weight:700; letter-spacing:.1em; color:var(--near-black); border:1px solid var(--near-black); padding:.62rem 1.2rem; transition:background .2s,color .2s; }
+    .btn-dark:hover { background:var(--near-black); color:#fff; }
+    .btn-ext { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.68rem; font-weight:700; letter-spacing:.1em; color:var(--royal-blue); border:1px solid var(--royal-blue); padding:.62rem 1.2rem; transition:background .2s,color .2s; }
+    .btn-ext:hover { background:var(--royal-blue); color:#fff; }
+
+    /* WHY */
+    #why { background:var(--deep-navy); padding:clamp(4.5rem,9vw,9rem) 0; }
+    .why-headline { font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,3.8vw,3rem); line-height:1.1; letter-spacing:-.02em; color:var(--off-white); margin-bottom:.9rem; }
+    .why-stmt { font-family:var(--font-display); font-size:clamp(1rem,2.2vw,1.5rem); font-weight:600; color:rgba(245,247,250,.18); line-height:1.3; margin-bottom:3.5rem; letter-spacing:-.01em; }
+    .why-grid { display:grid; grid-template-columns:repeat(2,1fr); border:1px solid var(--line); }
+    .why-card { padding:2.75rem; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .why-card:nth-child(2n) { border-right:none; }
+    .why-card:nth-child(3),.why-card:nth-child(4) { border-bottom:none; }
+    .why-num { font-family:var(--font-mono); font-size:.62rem; color:var(--royal-blue); letter-spacing:.15em; margin-bottom:.9rem; display:block; }
+    .why-title { font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--off-white); margin-bottom:.65rem; }
+    .why-desc { color:var(--soft-grey); font-size:.88rem; line-height:1.7; }
+
+    /* TESTIMONIAL */
+    #testimonial { background:var(--near-black); padding:clamp(4.5rem,9vw,9rem) 0; position:relative; overflow:hidden; }
+    .testi-bg { position:absolute; inset:0; }
+    .testi-bg img { width:100%; height:100%; object-fit:cover; opacity:.06; }
+    .testi-bg::after { content:''; position:absolute; inset:0; background-image:linear-gradient(to right,rgba(0,200,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,200,255,.03) 1px,transparent 1px); background-size:48px 48px; }
+    .stars { display:flex; gap:.28rem; justify-content:center; margin-bottom:1.75rem; }
+    .star { color:#F5A623; font-size:1.05rem; }
+    .testi-quote { font-family:var(--font-display); font-size:clamp(1.2rem,2.8vw,1.9rem); font-style:italic; line-height:1.55; text-align:center; color:var(--off-white); max-width:820px; margin:0 auto 1.75rem; }
+    .testi-attr { text-align:center; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.2em; color:var(--soft-grey); }
+
+    /* ABOUT */
+    #about { background:var(--off-white); padding:clamp(4.5rem,9vw,9rem) 0; }
+    #about .section-title { color:var(--near-black); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .about-visual { position:relative; aspect-ratio:1; overflow:hidden; border:1px solid rgba(5,7,11,.1); }
+    .about-visual-img { width:100%; height:100%; object-fit:cover; }
+    .about-visual-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(5,7,11,.18) 0%,rgba(7,91,255,.06) 100%); }
+    .about-visual-grid { position:absolute; inset:0; background-image:linear-gradient(to right,rgba(7,91,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(7,91,255,.05) 1px,transparent 1px); background-size:32px 32px; }
+    .about-lbl { position:absolute; font-family:var(--font-mono); font-size:.52rem; color:rgba(7,91,255,.45); letter-spacing:.1em; background:rgba(5,7,11,.55); padding:.2rem .45rem; }
+    .about-lbl.tl { top:.65rem; left:.65rem; }
+    .about-lbl.br { bottom:.65rem; right:.65rem; }
+    .about-body { color:#555; line-height:1.8; margin-bottom:1.4rem; }
+    .about-belief { border-left:2px solid var(--royal-blue); padding-left:.9rem; font-size:.88rem; color:#666; line-height:1.7; margin-bottom:1.75rem; }
+    /* Contact info strip in about */
+    .about-contact-strip { display:flex; gap:2rem; flex-wrap:wrap; margin-top:1.75rem; padding-top:1.75rem; border-top:1px solid rgba(5,7,11,.08); }
+    .about-contact-item { display:flex; flex-direction:column; gap:.2rem; }
+    .about-contact-lbl { font-family:var(--font-mono); font-size:.55rem; letter-spacing:.15em; color:#999; }
+    .about-contact-val { font-size:.9rem; color:var(--near-black); font-weight:500; }
+    .about-contact-val a { color:var(--royal-blue); }
+
+    /* FAQ */
+    #faq { background:var(--near-black); padding:clamp(4.5rem,9vw,9rem) 0; }
+    .faq-title { font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,3.8vw,3rem); line-height:1.1; letter-spacing:-.02em; color:var(--off-white); margin-bottom:2.75rem; }
+    .faq-list { max-width:780px; }
+    .faq-item { border-bottom:1px solid var(--line); overflow:hidden; }
+    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:1.35rem 0; cursor:pointer; font-family:var(--font-display); font-size:1rem; color:var(--off-white); gap:1rem; transition:color .2s; }
+    .faq-q:hover { color:var(--royal-blue); }
+    .faq-icon { flex-shrink:0; width:22px; height:22px; border-radius:50%; border:1px solid var(--soft-grey); display:flex; align-items:center; justify-content:center; font-size:.95rem; color:var(--soft-grey); transition:transform .3s,border-color .2s,color .2s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); border-color:var(--royal-blue); color:var(--royal-blue); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .4s var(--ease-io); }
+    .faq-item.open .faq-a { max-height:280px; }
+    .faq-a p { color:var(--soft-grey); font-size:.88rem; line-height:1.75; padding-bottom:1.35rem; }
+
+    /* CTA */
+    #cta { background:var(--near-black); padding:clamp(5.5rem,11vw,11rem) 0; position:relative; overflow:hidden; text-align:center; border-top:1px solid var(--line); }
+    .cta-photo-bg { position:absolute; inset:0; }
+    .cta-photo-bg img { width:100%; height:100%; object-fit:cover; opacity:.055; }
+    .cta-bg-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:var(--font-display); font-weight:700; font-size:clamp(5rem,17vw,15rem); line-height:1; color:transparent; -webkit-text-stroke:1px rgba(7,91,255,.055); white-space:nowrap; pointer-events:none; user-select:none; letter-spacing:-.04em; }
+    .cta-content { position:relative; z-index:1; }
+    .cta-headline { font-family:var(--font-display); font-weight:700; font-size:clamp(2.2rem,5.5vw,4.5rem); line-height:1.05; letter-spacing:-.03em; color:var(--off-white); margin-bottom:1.35rem; }
+    .cta-sub { color:var(--soft-grey); margin-bottom:2.75rem; max-width:480px; margin-left:auto; margin-right:auto; }
+    .cta-btns { display:flex; justify-content:center; flex-wrap:wrap; gap:1.1rem; }
+    .btn-wa { display:inline-flex; align-items:center; gap:.45rem; font-family:var(--font-mono); font-size:.7rem; font-weight:700; letter-spacing:.1em; color:#25D366; border:1px solid #25D366; padding:.75rem 1.5rem; transition:background .2s,color .2s; }
+    .btn-wa:hover { background:#25D366; color:#fff; }
+
+    /* CONTACT */
+    #contact { background:var(--off-white); padding:clamp(4.5rem,9vw,9rem) 0; border-top:1px solid rgba(5,7,11,.07); }
+    #contact .section-title { color:var(--near-black); }
+    .contact-grid { display:grid; grid-template-columns:1fr 1.45fr; gap:5.5rem; align-items:start; }
+    .contact-info { margin-top:1.75rem; }
+    .contact-info-item { margin-bottom:1.35rem; border-bottom:1px solid rgba(5,7,11,.07); padding-bottom:1.35rem; }
+    .contact-info-lbl { font-family:var(--font-mono); font-size:.58rem; color:#999; letter-spacing:.15em; margin-bottom:.22rem; }
+    .contact-info-val { font-family:var(--font-display); font-weight:600; color:var(--near-black); font-size:.98rem; }
+    .contact-info-val a { color:var(--royal-blue); }
+    .contact-note { color:#777; font-size:.88rem; line-height:1.7; margin-top:1.35rem; }
+    /* Map embed */
+    .contact-map { margin-top:1.75rem; border:1px solid rgba(5,7,11,.08); overflow:hidden; }
+    .contact-map iframe { width:100%; height:200px; display:block; border:none; filter:grayscale(20%); }
+    .form-card { background:var(--near-black); border:1px solid var(--line); padding:2.75rem; position:relative; }
+    .form-card-lbl { position:absolute; top:.9rem; right:1.25rem; font-family:var(--font-mono); font-size:.56rem; color:rgba(7,91,255,.38); letter-spacing:.1em; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.35rem; }
+    .form-field { margin-bottom:1.35rem; }
+    .form-label { display:block; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.12em; color:var(--soft-grey); margin-bottom:.45rem; }
+    .form-label .req { color:var(--royal-blue); margin-left:.18rem; }
+    .form-input { width:100%; background:transparent; border:none; border-bottom:1px solid var(--line); color:var(--off-white); padding:.55rem 0; font-size:.93rem; outline:none; transition:border-color .2s; }
+    .form-input:focus { border-color:var(--royal-blue); }
+    .form-input.err { border-color:#ff4444; }
+    .form-err { font-family:var(--font-mono); font-size:.58rem; color:#ff4444; letter-spacing:.08em; margin-top:.32rem; display:none; }
+    .form-err.show { display:block; }
+    select.form-input option { background:var(--near-black); }
+    textarea.form-input { resize:vertical; min-height:90px; border:1px solid var(--line); padding:.7rem; }
+    textarea.form-input:focus { border-color:var(--royal-blue); }
+    .hp-field { display:none; }
+    .btn-submit { width:100%; padding:.95rem; background:var(--royal-blue); color:#fff; font-family:var(--font-mono); font-size:.72rem; font-weight:700; letter-spacing:.15em; border:none; cursor:pointer; transition:background .2s,transform .1s; }
+    .btn-submit:hover { background:#1a6fff; }
+    .btn-submit:active { transform:scale(.99); }
+    .btn-submit:disabled { opacity:.6; cursor:not-allowed; }
+    /* WhatsApp submit */
+    .btn-submit-wa { width:100%; padding:.85rem; background:#25D366; color:#fff; font-family:var(--font-mono); font-size:.72rem; font-weight:700; letter-spacing:.15em; border:none; cursor:pointer; transition:background .2s; margin-top:.65rem; }
+    .btn-submit-wa:hover { background:#1ebe5d; }
+    .form-success { display:none; text-align:center; padding:2.75rem 0; }
+    .form-success.show { display:block; }
+    .form-success h3 { font-family:var(--font-display); font-size:1.45rem; color:var(--off-white); margin-bottom:.65rem; }
+    .form-success p { color:var(--soft-grey); font-size:.88rem; }
+
+    /* FOOTER */
+    footer { background:var(--near-black); border-top:1px solid var(--line); padding:clamp(3.5rem,7vw,6rem) clamp(1.25rem,5vw,4rem) 2rem; position:relative; overflow:hidden; }
+    .footer-big-word { position:absolute; bottom:-1rem; left:-0.5rem; font-family:var(--font-display); font-weight:700; font-size:clamp(5rem,14vw,12rem); line-height:1; color:transparent; -webkit-text-stroke:1px rgba(245,247,250,.028); pointer-events:none; user-select:none; letter-spacing:-.05em; }
+    .footer-inner { position:relative; z-index:1; max-width:1440px; margin:0 auto; }
+    .footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:2.75rem; padding-bottom:3.5rem; border-bottom:1px solid var(--line); }
+    .footer-logo-row { display:flex; align-items:center; gap:.65rem; margin-bottom:.45rem; }
+    .footer-logo-img { width:36px; height:36px; object-fit:contain; border-radius:7px; }
+    .footer-wordmark { font-family:var(--font-display); font-size:1.1rem; font-weight:700; letter-spacing:-.02em; color:var(--off-white); }
+    .footer-tagline { font-family:var(--font-mono); font-size:.62rem; color:var(--soft-grey); letter-spacing:.1em; margin-bottom:1.35rem; }
+    .footer-socials { display:flex; gap:.75rem; flex-wrap:wrap; }
+    .footer-col-lbl { font-family:var(--font-mono); font-size:.56rem; letter-spacing:.2em; color:rgba(156,166,181,.45); margin-bottom:.85rem; display:block; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+    .footer-links a { font-size:.88rem; color:var(--soft-grey); transition:color .2s; }
+    .footer-links a:hover { color:var(--royal-blue); }
+    .footer-bottom { padding-top:1.35rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.9rem; }
+    .footer-copy { font-family:var(--font-mono); font-size:.57rem; color:rgba(156,166,181,.38); letter-spacing:.1em; }
+    .back-top { font-family:var(--font-mono); font-size:.62rem; color:var(--royal-blue); letter-spacing:.12em; transition:opacity .2s; }
+    .back-top:hover { opacity:.65; }
+    .footer-status { display:flex; align-items:center; gap:.4rem; font-family:var(--font-mono); font-size:.57rem; color:rgba(156,166,181,.32); letter-spacing:.08em; }
+    .footer-status-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; flex-shrink:0; }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      #hero{grid-template-columns:1fr}
+      .hero-left{height:50vh}
+      .hero-stats{display:none}
+      .phil-grid{grid-template-columns:1fr}
+      .process-steps{grid-template-columns:repeat(2,1fr)}
+      .process-step:nth-child(2){border-right:none}
+      .svc-panel,.proj-card{grid-template-columns:1fr}
+      .svc-panel.rev,.proj-card.rev{direction:ltr}
+      .svc-body{border-left:none!important;border-right:none!important;border-top:1px solid var(--line)}
+      .proj-body{border-left:none!important;border-right:none!important;border-top:1px solid rgba(5,7,11,.08)}
+      .pricing-grid{grid-template-columns:1fr}
+      .pricing-card{border-right:none;border-bottom:1px solid var(--line)}
+      .pricing-card:last-child{border-bottom:none}
+      .about-grid{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr;gap:3rem}
+      .footer-top{grid-template-columns:1fr 1fr}
+      .why-grid{grid-template-columns:1fr}
+      .why-card{border-right:none}
+      .why-card:nth-child(3),.why-card:nth-child(4){border-bottom:1px solid var(--line)}
+      .why-card:last-child{border-bottom:none}
+      .process-visual-content{flex-direction:column}
+      .wf-block{height:80px}
+    }
+    @media(max-width:768px) {
+      .nav-links{display:none}
+      #hamburger{display:flex}
+      #mobile-menu{display:flex}
+      .nav-right .btn{display:none}
+      .process-steps{grid-template-columns:1fr}
+      .process-step{border-right:none}
+      .form-row{grid-template-columns:1fr}
+      .hero-ctas{flex-direction:column}
+      .footer-top{grid-template-columns:1fr}
+      .footer-bottom{flex-direction:column;align-items:flex-start}
+      #cursor,#cursor-ring{display:none}
+      .marquee-pills{flex-direction:column;align-items:center;gap:.65rem}
+      .process-visual{height:240px}
+      .about-contact-strip{flex-direction:column;gap:1rem}
+    }
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .marquee-track{animation:none}
+    }
+  </style>
 </head>
 <body>
 
-<nav id="navbar">
-  <div class="nav-inner">
-    <div class="logo" onclick="goTo('home')"><span class="blue">Nex</span>igen<span class="gray">Studios</span></div>
-    <div class="desk-nav">
-      <button onclick="goTo('home')">Home</button>
-      <button onclick="goTo('services')">Services</button>
-      <button onclick="goTo('process')">Process</button>
-      <button onclick="goTo('pricing')">Pricing</button>
-      <button onclick="goTo('about')">About</button>
-      <button onclick="goTo('faq')">FAQ</button>
-      <button onclick="goTo('contact')">Contact</button>
-      <button class="btn-cta" onclick="openWA('I\'d like to start a project with Nexigen Studios!')">Get Started</button>
-    </div>
-    <button class="mob-btn" onclick="toggleMenu()">☰</button>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div id="progress-bar" role="progressbar" aria-label="Page scroll progress"></div>
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+<div id="cursor-label" class="cursor-label" aria-hidden="true">VIEW PROJECT</div>
+
+<!-- Blueprint overlay -->
+<div id="blueprint-overlay" aria-hidden="true">
+  <div class="bp-grid"></div>
+  <span class="bp-label" style="top:68px;left:1rem;">[ Y: 0000 ]</span>
+  <span class="bp-label" style="top:68px;right:1rem;">[ SECTION: HERO ]</span>
+  <span class="bp-label" style="bottom:2rem;left:1rem;">[ GRID: 12COL / 40PX ]</span>
+  <span class="bp-label" style="bottom:2rem;right:1rem;">[ RES: 1440px ]</span>
+  <div class="bp-x" style="top:50%;left:50%;"></div>
+  <div class="bp-x" style="top:25%;left:25%;"></div>
+  <div class="bp-x" style="top:75%;left:75%;"></div>
+</div>
+
+<!-- Loader -->
+<div id="loader" role="status" aria-label="Loading Nexigen Studios">
+  <img id="loader-logo" src="logo.png" alt="Nexigen Studios" style="width:64px;height:64px;object-fit:contain;border-radius:12px;" />
+  <h2>NEXIGEN STUDIOS</h2>
+  <p>KERALA'S RISING DIGITAL STUDIO.</p>
+  <div id="loader-bar"></div>
+</div>
+
+<!-- Nav -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-logo">
+    <a href="#" class="nav-logo-link" aria-label="Nexigen Studios home">
+      <img src="logo.png" class="nav-logo-img" alt="" aria-hidden="true" />
+      <span class="nav-wordmark">NEXIGEN</span>
+    </a>
+    <span class="nav-badge">V3.0</span>
   </div>
-  <div class="mob-menu" id="mobMenu">
-    <button onclick="goTo('home')">Home</button>
-    <button onclick="goTo('services')">Services</button>
-    <button onclick="goTo('process')">Process</button>
-    <button onclick="goTo('pricing')">Pricing</button>
-    <button onclick="goTo('about')">About</button>
-    <button onclick="goTo('faq')">FAQ</button>
-    <button onclick="goTo('contact')">Contact</button>
-    <button class="btn-full" onclick="openWA('I\'d like to start a project with Nexigen Studios!')">Get Started</button>
+  <ul class="nav-links" role="list">
+    <li><a href="#services" title="Website Design and Development Services">Services</a></li>
+    <li><a href="#process" title="Our Process — How We Build Websites">Process</a></li>
+    <li><a href="#pricing" title="Transparent Website Pricing Plans">Pricing</a></li>
+    <li><a href="#about" title="About Nexigen Studios — Kerala">About</a></li>
+    <li><a href="#faq" title="Frequently Asked Questions">FAQ</a></li>
+    <li><a href="#contact" title="Contact Nexigen Studios">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="bp-toggle" aria-pressed="false" aria-label="Toggle blueprint mode">
+      <span id="bp-dot"></span>
+      <span id="bp-label-text">BLUEPRINT [OFF]</span>
+    </button>
+    <a href="#contact" class="btn btn-solid" role="button">GET STARTED →</a>
+    <button id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<section id="home">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <div class="badge">✦ Kerala's Rising Digital Studio</div>
-      <h1>We Build Modern<br><span>Websites That Work.</span></h1>
-      <p>Nexigen Studios helps businesses grow through beautifully crafted websites that deliver real results — fast, modern, and built to convert.</p>
-      <div class="hero-btns">
-        <button class="btn-primary" onclick="openWA('Hi! I\'d like to start a project with Nexigen Studios.')">Start a Project →</button>
-        <button class="btn-secondary" onclick="goTo('services')">Our Services</button>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="browser-card">
-        <div class="browser-bar">
-          <div class="dot" style="background:#ff5f57"></div>
-          <div class="dot" style="background:#febc2e"></div>
-          <div class="dot" style="background:#28c840"></div>
-          <div class="url-bar">nexigenstudios.com</div>
-        </div>
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=85" alt="Dashboard"/>
-        <div class="browser-stats">
-          <div class="browser-metrics">
-            <div class="metric"><div class="metric-lbl">Revenue</div><div class="metric-val" style="color:#22c55e">↑ 34%</div></div>
-            <div class="metric"><div class="metric-lbl">Users</div><div class="metric-val" style="color:#2563EB">↑ 18%</div></div>
-            <div class="metric"><div class="metric-lbl">Conv.</div><div class="metric-val" style="color:#f59e0b">↑ 12%</div></div>
-          </div>
-          <div class="progress-bar"><div class="progress-fill"></div></div>
-        </div>
-      </div>
-      <div class="badge-live">✓ Live Now</div>
-      <div class="badge-launch"><span>🚀</span><div><div class="badge-launch-lbl">Launched in</div><div class="badge-launch-val">14 days</div></div></div>
-    </div>
-  </div>
-</section>
-
-<div class="ticker-wrap">
-  <div class="ticker-track" id="tickerTrack"></div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <img src="logo.png" alt="Nexigen Studios" style="width:52px;height:52px;object-fit:contain;border-radius:10px;margin-bottom:1rem;" />
+  <a href="#services" class="mobile-nav-link">Services</a>
+  <a href="#process" class="mobile-nav-link">Process</a>
+  <a href="#pricing" class="mobile-nav-link">Pricing</a>
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#faq" class="mobile-nav-link">FAQ</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
 </div>
 
-<section id="services">
-  <div class="services-grid">
-    <div class="fade-in section-center">
-      <div class="section-tag">What We Do</div>
-      <h2 class="section-title">Website Services We Offer</h2>
-      <p class="section-sub">From concept to launch, we cover every aspect of building your perfect website.</p>
+<main id="main">
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section id="hero" aria-label="Hero — Nexigen Studios">
+  <div class="hero-left">
+    <img
+      class="hero-img"
+      src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=1400&auto=format&fit=crop&q=90"
+      alt="Dark-themed code editor — developer workspace at Nexigen Studios, Kerala"
+      loading="eager" fetchpriority="high"
+      onload="this.classList.add('loaded')"
+    />
+    <div class="hero-left-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-badge">Kerala's Rising Digital Studio</div>
+    <p class="hero-coords">[ 8.8868° N, 76.6042° E — KOLLAM, KERALA ]</p>
+    <!-- Live stats card from current site -->
+    <div class="hero-stats" aria-label="Live project stats">
+      <p class="hero-stats-title">[ NEXIGENSTUDIOS.IN ]</p>
+      <div class="hero-stats-row">
+        <div class="hero-stat">
+          <span class="hero-stat-val">34<span class="hero-stat-up">%↑</span></span>
+          <span class="hero-stat-label">REVENUE</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">18<span class="hero-stat-up">%↑</span></span>
+          <span class="hero-stat-label">USERS</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">12<span class="hero-stat-up">%↑</span></span>
+          <span class="hero-stat-label">CONV.</span>
+        </div>
+      </div>
+      <div class="hero-live">
+        <span class="hero-live-dot"></span>LIVE NOW
+      </div>
     </div>
-    <div class="cards-grid" id="servicesGrid"></div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-content">
+      <p class="hero-tag">ENGINEERING PERFORMANCE</p>
+      <h1 class="hero-headline">
+        <span class="l1 reveal">WE BUILD</span>
+        <span class="l2 reveal">MODERN</span>
+        <span class="l3 reveal">WEBSITES.</span>
+      </h1>
+      <p class="hero-sub reveal">Nexigen Studios helps businesses grow through beautifully crafted websites that deliver real results — fast, modern, and built to convert.</p>
+      <div class="hero-ctas reveal">
+        <a href="#work" class="btn btn-solid">VIEW OUR WORK →</a>
+        <a href="#contact" class="btn btn-outline">START A PROJECT →</a>
+      </div>
+      <p class="hero-note reveal">FOR BUSINESSES. STARTUPS. CREATORS.</p>
+    </div>
+    <div class="scroll-ind" aria-hidden="true">SCROLL</div>
   </div>
 </section>
 
-<section id="process">
-  <div class="process-inner">
-    <div class="fade-in section-center">
-      <div class="section-tag">How We Work</div>
-      <h2 class="section-title">Our Process</h2>
-      <p class="section-sub">A proven four-step approach that turns your idea into a high-performing website.</p>
+<!-- ── MARQUEE ─────────────────────────────────────────────── -->
+<div id="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>STRATEGY</span><span class="dot">•</span>
+    <span>UI/UX DESIGN</span><span class="dot">•</span>
+    <span>WEBSITE DEVELOPMENT</span><span class="dot">•</span>
+    <span>PERFORMANCE</span><span class="dot">•</span>
+    <span>SEO</span><span class="dot">•</span>
+    <span>BUSINESS SOFTWARE</span><span class="dot">•</span>
+    <span>KERALA</span><span class="dot">•</span>
+    <span>LAUNCHED IN 14 DAYS</span><span class="dot">•</span>
+    <span>STRATEGY</span><span class="dot">•</span>
+    <span>UI/UX DESIGN</span><span class="dot">•</span>
+    <span>WEBSITE DEVELOPMENT</span><span class="dot">•</span>
+    <span>PERFORMANCE</span><span class="dot">•</span>
+    <span>SEO</span><span class="dot">•</span>
+    <span>BUSINESS SOFTWARE</span><span class="dot">•</span>
+    <span>KERALA</span><span class="dot">•</span>
+    <span>LAUNCHED IN 14 DAYS</span><span class="dot">•</span>
+  </div>
+</div>
+<div class="marquee-pills" aria-label="Core strengths">
+  <span>Mobile-First Design</span>
+  <span>Performance Focused</span>
+  <span>Launched in 14 Days</span>
+  <span>Built for Business Growth</span>
+</div>
+
+<!-- ── TEAM AT WORK ──────────────────────────────────────────── -->
+<section id="team-at-work" aria-label="Our team at work">
+  <div class="team-img" style="position:relative;overflow:hidden;height:clamp(300px,44vw,520px);border-bottom:1px solid var(--line);">
+    <img
+      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1800&auto=format&fit=crop&q=85"
+      alt="Nexigen Studios team collaborating together on computers and digital projects in Kerala"
+      loading="lazy"
+      style="width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;"
+    />
+    <div class="team-overlay" style="position:absolute;inset:0;background:linear-gradient(to right,rgba(5,7,11,.86) 0%,rgba(5,7,11,.38) 55%,rgba(5,7,11,.76) 100%);"></div>
+    <div class="team-grid-overlay" style="position:absolute;inset:0;background-image:linear-gradient(to right,rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,200,255,.04) 1px,transparent 1px);background-size:40px 40px;"></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 clamp(1.5rem,6vw,6rem);">
+      <div style="max-width:520px;">
+        <span style="font-family:var(--font-mono);font-size:.62rem;letter-spacing:.25em;color:var(--electric-cyan);display:block;margin-bottom:1.1rem;">[ THE TEAM ]</span>
+        <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.7rem,3.8vw,3rem);line-height:1.05;letter-spacing:-.02em;color:var(--off-white);margin-bottom:1.1rem;">
+          Real people.<br>Real craft.
+        </h2>
+        <p style="font-size:.97rem;color:var(--soft-grey);line-height:1.75;max-width:400px;">
+          Every project is built by designers, developers and strategists who care — working together to deliver digital experiences that perform.
+        </p>
+        <div style="width:2.5rem;height:2px;background:var(--royal-blue);margin-top:1.75rem;"></div>
+      </div>
     </div>
-    <div class="process-steps" id="processSteps"></div>
+    <span style="position:absolute;bottom:.9rem;right:1.25rem;font-family:var(--font-mono);font-size:.52rem;color:rgba(0,200,255,.3);letter-spacing:.12em;">[ NEXIGEN_TEAM_001 ]</span>
   </div>
 </section>
 
-<section id="about">
-  <div class="about-inner" style="max-width:860px;margin:0 auto">
-    <div class="about-text fade-in" style="text-align:center">
-      <div class="section-tag" style="display:block;text-align:center">About Us</div>
-      <h2 class="section-title" style="line-height:1.2">We're a Team of Website Craftspeople</h2>
-      <p>Founded in 2026, Nexigen Studios is a boutique web studio based in Kollam, Kerala — specializing in creating powerful website experiences for ambitious businesses across India.</p>
-      <p>Our mission is simple: deliver exceptional websites that drive real business growth — on time, on budget, and beyond expectations.</p>
-      <div class="about-steps" style="justify-content:center;margin-top:20px">
-        <div class="step-badge"><span class="step-num">1</span>Strategy</div>
-        <div class="step-badge"><span class="step-num">2</span>Design</div>
-        <div class="step-badge"><span class="step-num">3</span>Development</div>
-        <div class="step-badge"><span class="step-num">4</span>Launch</div>
+<!-- ── PHILOSOPHY ─────────────────────────────────────────────── -->
+<section id="philosophy" aria-labelledby="phil-heading">
+  <span class="phil-bg-word" aria-hidden="true">IMPACT</span>
+  <div class="container">
+    <div class="phil-grid">
+      <div class="phil-visual reveal" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&auto=format&fit=crop&q=85"
+          alt="Designer working on website strategy and wireframes"
+          loading="lazy"
+        />
+        <span class="phil-visual-lbl">[ PHILOSOPHY_VISUAL_01 ]</span>
+      </div>
+      <div>
+        <span class="eyebrow">[ OUR PHILOSOPHY ]</span>
+        <h2 id="phil-heading" class="phil-headline reveal">
+          We don't just build pages.<br>
+          We build digital experiences<br>that work.
+        </h2>
+        <p class="phil-body reveal">A website should do more than look attractive. It should communicate clearly, build customer confidence and guide visitors towards action. Every Nexigen Studios project combines strategy, thoughtful design, modern development and measurable performance.</p>
+        <div class="phil-stmt reveal">
+          No generic templates.<br>
+          No unnecessary complexity.<br>
+          Only purposeful digital experiences.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="pricing">
-  <div class="pricing-inner">
-    <div class="fade-in section-center">
-      <div class="section-tag">Pricing</div>
-      <h2 class="section-title">Transparent Pricing</h2>
-      <p class="section-sub">No hidden fees. Pick the plan that fits your goals.</p>
+<!-- ── SERVICES ────────────────────────────────────────────────── -->
+<section id="services" aria-labelledby="services-heading">
+  <div class="container services-intro">
+    <span class="eyebrow">[ WHAT WE DO ]</span>
+    <h2 id="services-heading" class="section-title reveal">Website services<br>we offer.</h2>
+    <p class="sub reveal">From concept to launch, we cover every aspect of building your perfect website.</p>
+  </div>
+
+  <!-- 01 Business Website -->
+  <article class="svc-panel reveal" aria-labelledby="svc1">
+    <div class="svc-media" aria-hidden="true">
+      <img class="svc-media-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&auto=format&fit=crop&q=80" alt="Professional business website on laptop" loading="lazy" />
+      <div class="svc-media-overlay"></div>
+      <span class="svc-media-num">[ SVC_01 ]</span>
     </div>
-    <div class="pricing-grid" id="pricingGrid"></div>
+    <div class="svc-body">
+      <span class="svc-lbl">01 // DIGITAL PRESENCE</span>
+      <h3 id="svc1" class="svc-title">Business<br>Websites</h3>
+      <p class="svc-desc">Professional, responsive websites designed to strengthen credibility, communicate your services and generate customer enquiries for your business.</p>
+      <a href="#contact" class="svc-link">EXPLORE SERVICE →</a>
+    </div>
+  </article>
+
+  <!-- 02 Landing Pages -->
+  <article class="svc-panel rev reveal" aria-labelledby="svc2">
+    <div class="svc-media" aria-hidden="true">
+      <img class="svc-media-img" src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=900&auto=format&fit=crop&q=80" alt="Landing page design on laptop" loading="lazy" />
+      <div class="svc-media-overlay"></div>
+      <span class="svc-media-num">[ SVC_02 ]</span>
+    </div>
+    <div class="svc-body">
+      <span class="svc-lbl">02 // CONVERSION SYSTEMS</span>
+      <h3 id="svc2" class="svc-title">Landing<br>Pages</h3>
+      <p class="svc-desc">Focused landing pages designed for advertising campaigns, business launches and lead generation — built to convert visitors into customers.</p>
+      <a href="#contact" class="svc-link">EXPLORE SERVICE →</a>
+    </div>
+  </article>
+
+  <!-- 03 Portfolio -->
+  <article class="svc-panel reveal" aria-labelledby="svc3">
+    <div class="svc-media" aria-hidden="true">
+      <img class="svc-media-img" src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=900&auto=format&fit=crop&q=80" alt="Creative portfolio website design" loading="lazy" />
+      <div class="svc-media-overlay"></div>
+      <span class="svc-media-num">[ SVC_03 ]</span>
+    </div>
+    <div class="svc-body">
+      <span class="svc-lbl">03 // PERSONAL IDENTITY</span>
+      <h3 id="svc3" class="svc-title">Portfolio<br>Websites</h3>
+      <p class="svc-desc">Distinctive portfolio experiences for professionals, students, creators and personal brands that make a lasting first impression.</p>
+      <a href="#contact" class="svc-link">EXPLORE SERVICE →</a>
+    </div>
+  </article>
+
+  <!-- 04 Maintenance -->
+  <article class="svc-panel rev reveal" aria-labelledby="svc4">
+    <div class="svc-media" aria-hidden="true">
+      <img class="svc-media-img" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&auto=format&fit=crop&q=80" alt="Website maintenance and server infrastructure" loading="lazy" />
+      <div class="svc-media-overlay"></div>
+      <span class="svc-media-num">[ SVC_04 ]</span>
+    </div>
+    <div class="svc-body">
+      <span class="svc-lbl">04 // CONTINUOUS IMPROVEMENT</span>
+      <h3 id="svc4" class="svc-title">Maintenance<br>&amp; Support</h3>
+      <p class="svc-desc">Website updates, performance improvements, security monitoring, content changes and dependable technical assistance — so you can focus on your business.</p>
+      <a href="#contact" class="svc-link">EXPLORE SERVICE →</a>
+    </div>
+  </article>
+</section>
+
+<!-- ── PROCESS ─────────────────────────────────────────────────── -->
+<section id="process" aria-labelledby="process-heading">
+  <div class="container">
+    <span class="eyebrow">[ HOW WE WORK ]</span>
+    <h2 id="process-heading" class="section-title reveal">A proven four-step approach<br>that turns your idea into a website.</h2>
+    <div class="process-steps" role="list">
+      <div class="process-step reveal" role="listitem">
+        <span class="step-num">01 — STRATEGY</span>
+        <h3 class="step-title">Strategy</h3>
+        <p class="step-desc">We understand your business, audience, goals, challenges and project requirements before touching a single pixel.</p>
+        <div class="step-bar"></div>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <span class="step-num">02 — DESIGN</span>
+        <h3 class="step-title">Design</h3>
+        <p class="step-desc">We create the visual direction, user experience, wireframes and responsive interface that represents your brand.</p>
+        <div class="step-bar"></div>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <span class="step-num">03 — DEVELOPMENT</span>
+        <h3 class="step-title">Development</h3>
+        <p class="step-desc">We transform the approved design into a fast, responsive and functional website — clean code, no bloat.</p>
+        <div class="step-bar"></div>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <span class="step-num">04 — LAUNCH</span>
+        <h3 class="step-title">Launch</h3>
+        <p class="step-desc">We test, optimize, launch and continue supporting your website as your business grows — on time, every time.</p>
+        <div class="step-bar"></div>
+      </div>
+    </div>
+    <div class="process-visual reveal" aria-hidden="true">
+      <img class="process-visual-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&auto=format&fit=crop&q=80" alt="Code development process" loading="lazy" />
+      <div class="process-visual-overlay"></div>
+      <div class="process-visual-content">
+        <div class="wf-block"><div class="wf-bar s"></div><div class="wf-bar m"></div><div class="wf-img"></div></div>
+        <div class="wf-block"><div class="wf-bar m"></div><div class="wf-bar s"></div><div class="wf-img"></div><div class="wf-bar s"></div></div>
+        <div class="wf-block" style="flex:.6"><div class="wf-img"></div><div class="wf-bar m"></div><div class="wf-bar s"></div></div>
+      </div>
+      <span class="process-visual-lbl">[ WIREFRAME_PREVIEW_V1.3 ]</span>
+    </div>
   </div>
 </section>
 
-<section id="reviews">
-  <div class="reviews-inner">
-    <div class="fade-in section-center">
-      <div class="section-tag">Reviews</div>
-      <h2 class="section-title">What Our Clients Say</h2>
+<!-- ── PRICING ─────────────────────────────────────────────────── -->
+<section id="pricing" aria-labelledby="pricing-heading">
+  <div class="container">
+    <span class="eyebrow">[ TRANSPARENT PRICING ]</span>
+    <h2 id="pricing-heading" class="section-title reveal">No hidden fees.<br>Pick the plan that fits your goals.</h2>
+    <div class="pricing-grid reveal">
+
+      <!-- Starter -->
+      <div class="pricing-card">
+        <span class="pricing-plan">STARTER</span>
+        <p class="pricing-name">Basic Website</p>
+        <p class="pricing-price">₹5,000 <span>onwards</span></p>
+        <span class="pricing-range">UNDER ₹5,000 – ₹10,000</span>
+        <p class="pricing-desc">Perfect for individuals, students and small businesses that need a clean, professional online presence fast.</p>
+        <ul class="pricing-features">
+          <li>Up to 3 pages</li>
+          <li>Mobile responsive design</li>
+          <li>Contact form</li>
+          <li>Basic SEO setup</li>
+          <li>1 revision round</li>
+          <li>Delivered in ~7 days</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">GET STARTED →</button>
+      </div>
+
+      <!-- Standard — most popular -->
+      <div class="pricing-card featured">
+        <span class="pricing-plan">STANDARD</span>
+        <p class="pricing-name">Business Website</p>
+        <p class="pricing-price">₹10,000 <span>onwards</span></p>
+        <span class="pricing-range">₹10,000 – ₹15,000</span>
+        <p class="pricing-desc">For growing businesses that need a complete, high-converting website with all the essentials done right.</p>
+        <ul class="pricing-features">
+          <li>Up to 6 pages</li>
+          <li>Custom UI/UX design</li>
+          <li>Mobile-first & responsive</li>
+          <li>On-page SEO optimization</li>
+          <li>Google Maps integration</li>
+          <li>2 revision rounds</li>
+          <li>Delivered in ~14 days</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">GET STARTED →</button>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card">
+        <span class="pricing-plan">PREMIUM</span>
+        <p class="pricing-name">Advanced Website</p>
+        <p class="pricing-price">₹15,000<span>+</span></p>
+        <span class="pricing-range">₹15,000 AND ABOVE</span>
+        <p class="pricing-desc">For businesses that need a fully custom, feature-rich website with advanced functionality and ongoing support.</p>
+        <ul class="pricing-features">
+          <li>Unlimited pages</li>
+          <li>Custom design system</li>
+          <li>Advanced interactions & animations</li>
+          <li>Full SEO + performance audit</li>
+          <li>CMS or management system</li>
+          <li>Priority support</li>
+          <li>Delivered in ~21 days</li>
+        </ul>
+        <button class="pricing-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">GET STARTED →</button>
+      </div>
+
     </div>
-    <div id="reviewsGrid"></div>
+    <p style="text-align:center;font-family:var(--font-mono);font-size:.62rem;color:rgba(156,166,181,.45);letter-spacing:.1em;margin-top:1.5rem;">ALL PRICES ARE STARTING POINTS — FINAL QUOTE AFTER PROJECT DISCUSSION.</p>
   </div>
 </section>
 
-<section id="faq">
-  <div class="faq-inner">
-    <div class="fade-in section-center">
-      <div class="section-tag">FAQ</div>
-      <h2 class="section-title">Frequently Asked Questions</h2>
+<!-- ── SELECTED WORK ────────────────────────────────────────────── -->
+<section id="work" aria-labelledby="work-heading">
+  <div class="container">
+    <div class="work-intro">
+      <span class="eyebrow">[ SELECTED PROJECTS ]</span>
+      <h2 id="work-heading" class="section-title reveal">Work designed<br>to make an impact.</h2>
+      <p class="work-sub reveal">Selected digital experiences created for real businesses with real goals.</p>
     </div>
-    <div class="faq-list" id="faqList"></div>
+
+    <!-- PROJECT 01 -->
+    <article class="proj-card reveal" aria-labelledby="proj1-title">
+      <div class="proj-media" data-project="1">
+        <img class="proj-media-img"
+          src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1000&auto=format&fit=crop&q=85"
+          alt="Gym At Your Home — fitness coaching and home workout website" loading="lazy" />
+        <div class="proj-media-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">PROJECT 01</span>
+        <span class="proj-cat">FITNESS BUSINESS WEBSITE</span>
+        <h3 id="proj1-title" class="proj-title">GYM AT YOUR HOME</h3>
+        <p class="proj-desc">A modern fitness website for personalized home and online coaching, live workout sessions, wellness programs and flexible fitness plans.</p>
+        <p class="proj-stmt">Bringing expert-guided fitness directly to clients — anywhere, anytime.</p>
+        <div class="proj-ctas">
+          <a href="#" class="btn-dark">VIEW CASE STUDY →</a>
+          <a href="https://gymatyourhome.com/" target="_blank" rel="noopener noreferrer" class="btn-ext">VISIT LIVE SITE ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 02 -->
+    <article class="proj-card rev reveal" aria-labelledby="proj2-title">
+      <div class="proj-media" data-project="2">
+        <img class="proj-media-img"
+          src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1000&auto=format&fit=crop&q=85"
+          alt="Easter Group Global — car wash and vehicle detailing business website" loading="lazy" />
+        <div class="proj-media-overlay"></div>
+      </div>
+      <div class="proj-body">
+        <span class="proj-num">PROJECT 02</span>
+        <span class="proj-cat">CAR-WASH BUSINESS WEBSITE</span>
+        <h3 id="proj2-title" class="proj-title">EASTER GROUP GLOBAL</h3>
+        <p class="proj-desc">A high-impact business website presenting professional car washing, snow foam washing, interior cleaning and complete vehicle-care services.</p>
+        <p class="proj-stmt">A modern digital identity that makes the business easier for customers to discover.</p>
+        <div class="proj-ctas">
+          <a href="#" class="btn-dark">VIEW CASE STUDY →</a>
+          <a href="https://eastergroupglobal.in/" target="_blank" rel="noopener noreferrer" class="btn-ext">VISIT LIVE SITE ↗</a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
-<section id="contact">
-  <div class="contact-inner">
-    <div class="fade-in section-center">
-      <div class="section-tag">Contact Us</div>
-      <h2 class="section-title">Let's Build Something Great</h2>
+<!-- ── WHY NEXIGEN ─────────────────────────────────────────────── -->
+<section id="why" aria-labelledby="why-heading">
+  <div class="container">
+    <span class="eyebrow">[ WHY NEXIGEN ]</span>
+    <h2 id="why-heading" class="why-headline reveal">Why businesses<br>choose Nexigen.</h2>
+    <p class="why-stmt reveal">YOUR WEBSITE SHOULD WORK<br>AS HARD AS YOUR BUSINESS.</p>
+    <div class="why-grid" role="list">
+      <div class="why-card reveal" role="listitem">
+        <span class="why-num">01</span>
+        <h3 class="why-title">Purposeful Design</h3>
+        <p class="why-desc">Every design decision supports your brand and business objectives — nothing is decorative for the sake of it.</p>
+      </div>
+      <div class="why-card reveal" role="listitem">
+        <span class="why-num">02</span>
+        <h3 class="why-title">Clear Communication</h3>
+        <p class="why-desc">We keep the project process transparent and easy to understand — no jargon, no surprises.</p>
+      </div>
+      <div class="why-card reveal" role="listitem">
+        <span class="why-num">03</span>
+        <h3 class="why-title">Modern Technology</h3>
+        <p class="why-desc">We use modern tools and development practices to create fast and dependable websites that score high on performance.</p>
+      </div>
+      <div class="why-card reveal" role="listitem">
+        <span class="why-num">04</span>
+        <h3 class="why-title">Reliable Support</h3>
+        <p class="why-desc">We continue supporting your digital presence after launch — because a website is never truly finished.</p>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ─────────────────────────────────────────────── -->
+<section id="testimonial" aria-labelledby="testi-heading">
+  <div class="testi-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&auto=format&fit=crop&q=60" alt="" loading="lazy" />
+  </div>
+  <div class="container" style="text-align:center;position:relative;z-index:1;">
+    <span class="eyebrow" style="display:block;text-align:center;">[ CLIENT EXPERIENCE ]</span>
+    <h2 id="testi-heading" class="section-title reveal" style="color:var(--off-white);margin-bottom:2.75rem;font-size:clamp(1.5rem,2.8vw,2.2rem);">What our client says.</h2>
+    <div class="stars" role="img" aria-label="5 out of 5 stars">
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+    </div>
+    <blockquote class="testi-quote reveal">
+      "Nexigen Studios built our live software, and it has made managing our business much easier. Very good team and excellent service."
+    </blockquote>
+    <footer class="testi-attr">
+      EASTER CARWASH<br>
+      <span style="opacity:.45;">Google Review • 5 Stars</span>
+    </footer>
+  </div>
+</section>
+
+<!-- ── ABOUT ───────────────────────────────────────────────────── -->
+<section id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <img class="about-visual-img"
+          src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&auto=format&fit=crop&q=85"
+          alt="Nexigen Studios team in Kollam, Kerala" loading="lazy" />
+        <div class="about-visual-overlay"></div>
+        <div class="about-visual-grid" aria-hidden="true"></div>
+        <span class="about-lbl tl" aria-hidden="true">[ NEXIGEN_STUDIOS ]</span>
+        <span class="about-lbl br" aria-hidden="true">[ KOLLAM, KERALA ]</span>
+      </div>
+      <div>
+        <span class="eyebrow">[ ABOUT US ]</span>
+        <h2 id="about-heading" class="section-title reveal" style="color:var(--near-black);margin-bottom:1.35rem;">We're a team of<br>website craftspeople.</h2>
+        <p class="about-body reveal">Founded in 2026, Nexigen Studios is a boutique web studio based in Kollam, Kerala — specializing in creating powerful website experiences for ambitious businesses across India.</p>
+        <p class="about-belief reveal">Our mission is simple: deliver exceptional websites that drive real business growth — on time, on budget, and beyond expectations.</p>
+        <a href="#contact" class="btn-dark reveal" style="margin-top:.5rem;">START A PROJECT →</a>
+        <!-- Real contact details from live site -->
+        <div class="about-contact-strip reveal">
+          <div class="about-contact-item">
+            <span class="about-contact-lbl">EMAIL</span>
+            <span class="about-contact-val"><a href="mailto:nexigenstudios@gmail.com">nexigenstudios@gmail.com</a></span>
+          </div>
+          <div class="about-contact-item">
+            <span class="about-contact-lbl">PHONE</span>
+            <span class="about-contact-val"><a href="tel:+917994042319">+91 79940 42319</a></span>
+          </div>
+          <div class="about-contact-item">
+            <span class="about-contact-lbl">LOCATION</span>
+            <span class="about-contact-val">Kollam, Kerala, India</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────── -->
+<section id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <span class="eyebrow" style="color:var(--royal-blue);">[ FAQ ]</span>
+    <h2 id="faq-heading" class="faq-title reveal">Frequently asked<br>questions.</h2>
+    <div class="faq-list" id="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How much does a website cost?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Our websites start from ₹5,000. The final price depends on your goals, pages and complexity. We'll give you a clear, honest quote after a short discussion — no hidden fees.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How long does it take to build a website?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Most business websites are delivered within 7–21 days depending on the plan. Our Standard plan typically launches in 14 days. We'll confirm your timeline before starting.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Will my website work on mobile devices?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Absolutely. Every website we build is mobile-first — designed and tested for smartphones, tablets and desktops from day one.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you provide domain and hosting assistance?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Yes. We'll guide you through choosing a domain and selecting the right hosting. We can also manage the full setup on your behalf.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can you redesign my existing website?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Yes. We regularly transform outdated websites into modern, fast, mobile-friendly experiences that better serve your customers and represent your brand.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can I update my website content after launch?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Yes. We provide clear handover documentation. You can manage it yourself or use our maintenance plan — we're always here to help.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you provide ongoing maintenance and support?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Yes. We offer ongoing support including updates, security monitoring, performance tuning and technical assistance to keep your site running perfectly.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How do I get started?<span class="faq-icon" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Simply fill out our contact form or send us a WhatsApp message. We'll get back to you within 24 hours to discuss your project and next steps.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ───────────────────────────────────────────────── -->
+<section id="cta" aria-labelledby="cta-heading">
+  <div class="cta-photo-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1400&auto=format&fit=crop&q=60" alt="" loading="lazy" />
+  </div>
+  <span class="cta-bg-text" aria-hidden="true">LET'S BUILD</span>
+  <div class="container cta-content">
+    <span class="eyebrow" style="display:block;text-align:center;">[ YOUR NEXT MOVE ]</span>
+    <h2 id="cta-heading" class="cta-headline reveal">Ready to build<br>something great?</h2>
+    <p class="cta-sub reveal">Tell us what you want to create. We'll get back to you within 24 hours.</p>
+    <div class="cta-btns reveal">
+      <a href="#contact" class="btn btn-solid" style="padding:.85rem 2rem;font-size:.75rem;">START YOUR PROJECT →</a>
+      <a href="https://wa.me/917994042319" target="_blank" rel="noopener noreferrer" class="btn-wa" style="padding:.85rem 2rem;" aria-label="Chat on WhatsApp">CHAT ON WHATSAPP →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────────────────── -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="container">
     <div class="contact-grid">
-      <div class="contact-info fade-in">
-        <h3>Get in Touch</h3>
-        <p>Ready to start your project? Reach out and we'll get back to you within 24 hours.</p>
-        <div class="contact-item"><div class="contact-icon">📧</div><span>nexigenstudios@gmail.com</span></div>
-        <div class="contact-item"><div class="contact-icon">📞</div><span>+91 79940 42319</span></div>
-        <div class="contact-item"><div class="contact-icon">📍</div><span>Kollam, Kerala, India</span></div>
-        <div class="social-row">
-          <a class="social-btn" href="https://twitter.com" target="_blank" rel="noopener">𝕏</a>
-          <a class="social-btn" href="https://linkedin.com" target="_blank" rel="noopener">in</a>
-          <a class="social-btn" href="https://facebook.com" target="_blank" rel="noopener">f</a>
-          <a class="social-btn" href="https://youtube.com" target="_blank" rel="noopener">▶</a>
+      <div>
+        <span class="eyebrow">[ GET IN TOUCH ]</span>
+        <h2 id="contact-heading" class="section-title reveal" style="color:var(--near-black);margin-bottom:1.75rem;">Let's build<br>something great.</h2>
+        <p class="contact-note reveal">Ready to start your project? Reach out and we'll get back to you within 24 hours.</p>
+        <div class="contact-info reveal">
+          <div class="contact-info-item">
+            <p class="contact-info-lbl">EMAIL</p>
+            <p class="contact-info-val"><a href="mailto:nexigenstudios@gmail.com">nexigenstudios@gmail.com</a></p>
+          </div>
+          <div class="contact-info-item">
+            <p class="contact-info-lbl">PHONE</p>
+            <p class="contact-info-val"><a href="tel:+917994042319">+91 79940 42319</a></p>
+          </div>
+          <div class="contact-info-item">
+            <p class="contact-info-lbl">LOCATION</p>
+            <p class="contact-info-val">Kollam, Kerala, India</p>
+          </div>
+          <div class="contact-info-item">
+            <p class="contact-info-lbl">INSTAGRAM</p>
+            <p class="contact-info-val"><a href="https://instagram.com/nexigenstudios" target="_blank" rel="noopener noreferrer">@nexigenstudios</a></p>
+          </div>
+        </div>
+        <!-- Google Maps — Kollam, Kerala -->
+        <div class="contact-map reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125712.17576534455!2d76.52033825!3d8.88680015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05f7f1c8b1a7b7%3A0x3b05f7f1c8b1a7b7!2sKollam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
+            title="Nexigen Studios location — Kollam, Kerala"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            aria-label="Map showing Nexigen Studios location in Kollam, Kerala"
+          ></iframe>
         </div>
       </div>
-      <div class="contact-form fade-in" style="transition-delay:.15s">
-        <div class="form-row">
-          <div class="form-group"><label>Full Name *</label><input type="text" id="fname" placeholder="Your name"/></div>
-          <div class="form-group"><label>Phone Number *</label><input type="tel" id="fphone" placeholder="+91 XXXXX XXXXX"/></div>
+      <div>
+        <div class="form-card">
+          <span class="form-card-lbl">[ FORM_ID_992 ]</span>
+          <div id="form-success" class="form-success" role="alert" aria-live="polite">
+            <h3>Enquiry Received ✓</h3>
+            <p>Thank you! We'll review your project and get back to you within 24 hours.</p>
+          </div>
+          <form id="contact-form" novalidate autocomplete="on">
+            <!-- Honeypot -->
+            <div class="hp-field" aria-hidden="true"><label for="hp">Leave empty</label><input type="text" name="hp" id="hp" tabindex="-1" autocomplete="off" /></div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="full-name">FULL NAME <span class="req">*</span></label>
+                <input class="form-input" type="text" id="full-name" name="fullName" placeholder="Your name" required autocomplete="name" />
+                <span class="form-err" id="full-name-err" role="alert">Please enter your name.</span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="phone">PHONE NUMBER <span class="req">*</span></label>
+                <input class="form-input" type="tel" id="phone" name="phone" placeholder="+91 79940 42319" required autocomplete="tel" />
+                <span class="form-err" id="phone-err" role="alert">Please enter your phone number.</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="email">EMAIL ADDRESS</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="project-type">SERVICE INTERESTED IN <span class="req">*</span></label>
+                <select class="form-input" id="project-type" name="projectType" required>
+                  <option value="" disabled selected>Select a service</option>
+                  <option value="business-website">Business Website</option>
+                  <option value="landing-page">Landing Page</option>
+                  <option value="portfolio-website">Portfolio Website</option>
+                  <option value="maintenance">Maintenance &amp; Support</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="form-err" id="project-type-err" role="alert">Please select a service.</span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="budget">BUDGET RANGE</label>
+                <select class="form-input" id="budget" name="budget">
+                  <option value="" disabled selected>Select a budget</option>
+                  <option value="under-5k">Under ₹5,000</option>
+                  <option value="5k-10k">₹5,000 – ₹10,000</option>
+                  <option value="10k-15k">₹10,000 – ₹15,000</option>
+                  <option value="15k-plus">₹15,000+</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="message">MESSAGE <span class="req">*</span></label>
+              <textarea class="form-input" id="message" name="message" placeholder="Tell us about your project, goals and any specific requirements..." rows="5" required></textarea>
+              <span class="form-err" id="message-err" role="alert">Please describe your project.</span>
+            </div>
+            <!--
+              DEVELOPER NOTE: Connect form submission below.
+              Options:
+                Formspree: set FORM_ENDPOINT = 'https://formspree.io/f/YOUR_ID'
+                EmailJS:   use emailjs.sendForm('SVC_ID','TPL_ID',form,'PUBLIC_KEY')
+                Custom API: POST to your backend endpoint
+            -->
+            <button type="submit" class="btn-submit" id="submit-btn">SEND PROJECT ENQUIRY →</button>
+            <a href="https://wa.me/917994042319?text=Hi%20Nexigen%20Studios%2C%20I%27d%20like%20to%20discuss%20a%20website%20project."
+               target="_blank" rel="noopener noreferrer"
+               class="btn-submit-wa">SEND VIA WHATSAPP →</a>
+          </form>
         </div>
-        <div class="form-group"><label>Email Address</label><input type="email" id="femail" placeholder="your@email.com"/></div>
-        <div class="form-group"><label>Service Interested In</label>
-          <select id="fservice">
-            <option value="">Select a service...</option>
-            <option>Business Website</option>
-            <option>Landing Page</option>
-            <option>Portfolio Website</option>
-            <option>Maintenance &amp; Support</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Budget Range</label>
-          <select id="fbudget">
-            <option value="">Select a budget...</option>
-            <option>Under ₹5,000</option>
-            <option>₹5,000 – ₹10,000</option>
-            <option>₹10,000 – ₹15,000</option>
-            <option>₹15,000+</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Message *</label><textarea id="fmsg" rows="4" placeholder="Tell us about your project..."></textarea></div>
-        <button class="btn-send" onclick="sendForm()">
-          <svg viewBox="0 0 32 32" width="20" height="20" fill="white"><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.74.7 5.31 1.93 7.55L.5 31.5l8.18-1.91A15.45 15.45 0 0016 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28.3a13.72 13.72 0 01-7.01-1.92l-.5-.3-5.17 1.21 1.24-5.03-.33-.52A13.72 13.72 0 012.2 16C2.2 8.38 8.38 2.2 16 2.2S29.8 8.38 29.8 16 23.62 28.8 16 28.8zm7.52-10.27c-.41-.21-2.44-1.2-2.82-1.34-.38-.13-.65-.2-.93.21-.27.41-1.07 1.34-1.31 1.62-.24.27-.48.3-.9.1-.41-.21-1.74-.64-3.32-2.04-1.23-1.09-2.06-2.44-2.3-2.85-.24-.41-.03-.63.18-.84.19-.18.41-.48.62-.72.2-.24.27-.41.41-.69.14-.27.07-.51-.03-.72-.1-.21-.93-2.24-1.27-3.07-.34-.8-.68-.69-.93-.7h-.79c-.27 0-.72.1-1.1.51-.38.41-1.44 1.41-1.44 3.44s1.48 3.99 1.68 4.27c.21.27 2.9 4.43 7.03 6.21.98.42 1.75.67 2.34.86.98.31 1.88.27 2.58.16.79-.12 2.44-.99 2.78-1.96.34-.96.34-1.79.24-1.96-.1-.17-.37-.27-.79-.48z"/></svg>
-          Send via WhatsApp
-        </button>
       </div>
-    </div>
-    <div class="map-wrap fade-in">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125712.17576534455!2d76.52033825!3d8.88680015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05f7f1c8b1a7b7%3A0x3b05f7f1c8b1a7b7!2sKollam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" allowfullscreen loading="lazy" title="Map"></iframe>
     </div>
   </div>
 </section>
 
-<footer>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <span class="footer-big-word" aria-hidden="true">NEXIGEN</span>
   <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo"><span class="blue">Nex</span>igen Studios</div>
-        <p>Building websites that move businesses forward.</p>
-        <div class="footer-social">
-          <a class="s-btn" href="https://twitter.com" target="_blank" rel="noopener">𝕏</a>
-          <a class="s-btn" href="https://linkedin.com" target="_blank" rel="noopener">in</a>
-          <a class="s-btn" href="https://facebook.com" target="_blank" rel="noopener">f</a>
-          <a class="s-btn" href="https://youtube.com" target="_blank" rel="noopener">▶</a>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-row">
+          <img src="logo.png" alt="Nexigen Studios" class="footer-logo-img" />
+          <span class="footer-wordmark">NEXIGEN STUDIOS</span>
+        </div>
+        <p class="footer-tagline">BUILDING WEBSITES THAT MOVE BUSINESSES FORWARD.</p>
+        <div class="footer-socials">
+          <a href="https://twitter.com/nexigenstudios" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.62rem;" aria-label="Nexigen Studios on X / Twitter">𝕏</a>
+          <a href="https://linkedin.com/company/nexigenstudios" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.62rem;" aria-label="Nexigen Studios on LinkedIn">in</a>
+          <a href="https://instagram.com/nexigenstudios" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.62rem;" aria-label="Nexigen Studios on Instagram">ig</a>
+          <a href="https://wa.me/917994042319" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="padding:.35rem .75rem;font-size:.62rem;color:#25D366;border-color:#25D366;" aria-label="Nexigen Studios on WhatsApp">wa</a>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <a onclick="goTo('home')">Home</a>
-        <a onclick="goTo('services')">Services</a>
-        <a onclick="goTo('pricing')">Pricing</a>
-        <a onclick="goTo('contact')">Contact</a>
+      <div>
+        <span class="footer-col-lbl">QUICK LINKS</span>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
       </div>
-      <div class="footer-col">
-        <h4>Services</h4>
-        <a onclick="goTo('services')">Business Websites</a>
-        <a onclick="goTo('services')">Landing Pages</a>
-        <a onclick="goTo('services')">Portfolio Sites</a>
-        <a onclick="goTo('services')">Maintenance</a>
+      <div>
+        <span class="footer-col-lbl">SERVICES</span>
+        <ul class="footer-links">
+          <li><a href="#services">Business Websites</a></li>
+          <li><a href="#services">Landing Pages</a></li>
+          <li><a href="#services">Portfolio Sites</a></li>
+          <li><a href="#services">Maintenance</a></li>
+        </ul>
       </div>
-      <div class="footer-col newsletter">
-        <h4>Newsletter</h4>
-        <p>Get updates on our latest work and insights.</p>
-        <div class="newsletter-input">
-          <input type="email" id="nlEmail" placeholder="your@email.com"/>
-          <button onclick="subscribeNewsletter()">→</button>
-        </div>
+      <div>
+        <span class="footer-col-lbl">LEGAL &amp; CONTACT</span>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="mailto:nexigenstudios@gmail.com">nexigenstudios@gmail.com</a></li>
+          <li><a href="tel:+917994042319">+91 79940 42319</a></li>
+          <li><a href="#contact">Kollam, Kerala, India</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Nexigen Studios. All rights reserved.</span>
-      <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
+      <p class="footer-copy">© 2026 NEXIGEN STUDIOS. ALL RIGHTS RESERVED. · <a href="#" style="color:inherit;">PRIVACY POLICY</a> · <a href="#" style="color:inherit;">TERMS OF SERVICE</a></p>
+      <div style="display:flex;align-items:center;gap:1.5rem;">
+        <span class="footer-status"><span class="footer-status-dot"></span>SYSTEMS NOMINAL</span>
+        <a href="#" class="back-top" aria-label="Back to top">BACK TO TOP ↑</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<button id="backTop" onclick="goTo('home')" title="Back to top">↑</button>
-<div class="toast" id="toast"></div>
-
 <script>
-const WA_NUM="917994042319";
-function openWA(msg){window.open("https://wa.me/"+WA_NUM+"?text="+encodeURIComponent(msg),"_blank","noopener");}
-function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth"});document.getElementById("mobMenu").style.display="none";}
-function toggleMenu(){const m=document.getElementById("mobMenu");m.style.display=m.style.display==="block"?"none":"block";}
-function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);}
+(function(){
+  'use strict';
 
-window.addEventListener("scroll",()=>{
-  document.getElementById("navbar").classList.toggle("scrolled",window.scrollY>20);
-  document.getElementById("backTop").classList.toggle("show",window.scrollY>400);
-});
+  /* LOADER */
+  const loader = document.getElementById('loader');
+  const loaderBar = document.getElementById('loader-bar');
+  const loaderLogo = document.getElementById('loader-logo');
+  const loaderH2 = loader.querySelector('h2');
+  const loaderP  = loader.querySelector('p');
+  const firstVisit = !sessionStorage.getItem('nx_v3_visited');
 
-// Ticker
-const TICKER_ITEMS=["Business Websites","Landing Pages","Portfolio Sites","Mobile-First Design","Performance","WordPress","Maintenance & Support","Modern Web Tech"];
-const tt=document.getElementById("tickerTrack");
-tt.innerHTML=[...TICKER_ITEMS,...TICKER_ITEMS,...TICKER_ITEMS,...TICKER_ITEMS].map(t=>`<div class="ticker-item"><span>✦</span>${t}</div>`).join('');
+  if(firstVisit){
+    sessionStorage.setItem('nx_v3_visited','1');
+    document.body.style.overflow='hidden';
+    setTimeout(()=>{
+      if(loaderLogo){loaderLogo.style.opacity='1';loaderLogo.style.transform='scale(1)';}
+    },80);
+    setTimeout(()=>{
+      loaderH2.style.opacity='1'; loaderP.style.opacity='1';
+      loaderBar.style.width='100%';
+    },350);
+    setTimeout(()=>{
+      loader.style.transition='opacity .75s';
+      loader.style.opacity='0';
+      document.body.style.overflow='';
+      setTimeout(()=>{ loader.style.display='none'; initReveal(); },750);
+    },2100);
+  } else {
+    loader.style.display='none';
+    initReveal();
+  }
 
-// Services (4 only — no SEO Optimization, no Website Redesign)
-const SERVICES=[
-  {icon:"🌐",title:"Business Websites",desc:"Professional, fast-loading websites that represent your brand and convert visitors into customers.",tag:"Most Popular"},
-  {icon:"📄",title:"Landing Pages",desc:"High-converting single pages designed to capture leads and drive targeted campaign results.",tag:""},
-  {icon:"📱",title:"Portfolio Websites",desc:"Stunning portfolio sites that showcase your work and make lasting impressions on potential clients.",tag:""},
-  {icon:"💻",title:"Custom Software",desc:"We build custom software tailored to your business needs, focusing on performance, scalability, and user-friendly design.",tag:""},
-  {icon:"🔧",title:"Maintenance & Support",desc:"Reliable ongoing support, updates, and monitoring so your website stays peak-ready always.",tag:""},
-];
-const sg=document.getElementById("servicesGrid");
-SERVICES.forEach((s,i)=>{
-  const card=document.createElement("div");
-  card.className="service-card fade-in";
-  card.style.transitionDelay=`${i*.08}s`;
-  card.innerHTML=`<div class="service-icon">${s.icon}</div><h3>${s.title}</h3><p>${s.desc}</p>${s.tag?`<div class="service-tag">${s.tag}</div>`:''}`;
-  card.onclick=()=>openWA(`Hi! I'm interested in your ${s.title} service.`);
-  sg.appendChild(card);
-});
+  /* PROGRESS */
+  const pBar=document.getElementById('progress-bar');
+  window.addEventListener('scroll',()=>{
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    pBar.style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+  },{passive:true});
 
-// Process
-const PROCESS=[
-  {icon:"🔍",title:"Discovery",desc:"We learn about your business, goals, and audience to build a solid strategic foundation."},
-  {icon:"🎨",title:"Design",desc:"Wireframes and polished UI designs crafted for impact, clarity, and your brand identity."},
-  {icon:"⚙️",title:"Development",desc:"Clean, performant code built with modern technologies and mobile-first best practices."},
-  {icon:"🚀",title:"Launch & Support",desc:"Seamless deployment followed by testing, handover, and ongoing support."},
-];
-const ps=document.getElementById("processSteps");
-PROCESS.forEach((p,i)=>{
-  ps.innerHTML+=`<div class="process-step fade-in" style="transition-delay:${i*.1}s">
-    <div style="position:relative;display:inline-block">
-      <div class="step-circle"><span>${p.icon}</span></div>
-      <div class="step-num-badge">${i+1}</div>
-    </div>
-    <h4>${p.title}</h4><p>${p.desc}</p>
-  </div>`;
-});
+  /* NAV */
+  const nav=document.getElementById('nav');
+  const updateNav=()=>nav.classList.toggle('scrolled',window.scrollY>55);
+  window.addEventListener('scroll',updateNav,{passive:true});
+  updateNav();
 
-// Pricing
-const PRICING=[
-  {name:"Starter",price:"4,999",desc:"Perfect for small businesses and personal brands.",features:["Mobile responsive","Basic SEO setup","1 month support","Contact form","Google Analytics"],off:["Custom animations","Priority support"]},
-  {name:"Growth",price:"6,999",desc:"Ideal for growing businesses ready to scale.",features:["Mobile responsive","Full SEO setup","3 months support"," animations","CMS integration","Performance optimization"],off:["Priority support"],popular:true},
-  {name:"Enterprise",price:"Custom",desc:"Full-scale solutions for ambitious brands.",features:["Mobile responsive","Full SEO setup","6 months support","Custom animations","Priority support","Dedicated account manager"],off:[]},
-];
-const pg=document.getElementById("pricingGrid");
-PRICING.forEach((p,i)=>{
-  const feats=p.features.map(f=>`<li>${f}</li>`).join('');
-  const offs=p.off.map(f=>`<li class="off">${f}</li>`).join('');
-  const waMsg=p.price==="Custom"?`Hi! I'm interested in the Enterprise plan. Let's discuss a custom quote.`:`Hi! I'm interested in the ${p.name} plan (₹${p.price}). Can we get started?`;
-  const card=document.createElement("div");
-  card.className=`pricing-card${p.popular?' popular':''} fade-in`;
-  card.style.transitionDelay=`${i*.1}s`;
-  card.innerHTML=`${p.popular?'<div class="popular-badge">⭐ Most Popular</div>':''}
-    <div class="plan-name">${p.name}</div>
-    <div class="plan-price">${p.price==='Custom'?'Custom':'<sup>₹</sup>'+p.price+'<span>/project</span>'}</div>
-    <div class="plan-desc">${p.desc}</div>
-    <ul class="plan-features">${feats}${offs}</ul>
-    <button class="btn-plan" onclick="openWA('${waMsg.replace(/'/g,"\\'")}')">Get Started →</button>`;
-  pg.appendChild(card);
-});
+  /* BLUEPRINT */
+  const bpToggle=document.getElementById('bp-toggle');
+  const bpLbl=document.getElementById('bp-label-text');
+  let bp=localStorage.getItem('nx_bp')==='1';
+  const applyBP=()=>{
+    document.body.classList.toggle('blueprint-active',bp);
+    bpLbl.textContent=bp?'BLUEPRINT [ON]':'BLUEPRINT [OFF]';
+    bpToggle.setAttribute('aria-pressed',bp);
+    localStorage.setItem('nx_bp',bp?'1':'0');
+  };
+  applyBP();
+  bpToggle.addEventListener('click',()=>{bp=!bp;applyBP();});
 
-// Single review — Gym at Your Home CEO only
-const rg=document.getElementById("reviewsGrid");
-rg.innerHTML=`<div class="review-card fade-in">
-  <div class="review-quote">"</div>
-  <p>Nexigen Studios built our fitness platform exactly as we envisioned. Clean, fast, and professional — our online enquiries tripled within the first month of launch. Absolutely brilliant team!</p>
-  <div class="review-author">
-    <div class="review-avatar">💪</div>
-    <div><div class="review-name">Jeevan Sunny</div><div class="review-company">CEO, Gym at Your Home</div></div>
-    <div class="review-stars">★★★★★</div>
-  </div>
-</div>`;
+  /* MOBILE MENU */
+  const ham=document.getElementById('hamburger');
+  const mm=document.getElementById('mobile-menu');
+  let mOpen=false;
+  const toggleMenu=()=>{
+    mOpen=!mOpen;
+    ham.classList.toggle('open',mOpen);
+    mm.classList.toggle('open',mOpen);
+    ham.setAttribute('aria-expanded',mOpen);
+    document.body.style.overflow=mOpen?'hidden':'';
+  };
+  ham.addEventListener('click',toggleMenu);
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(mOpen)toggleMenu();}));
 
-// FAQ
-const FAQS=[
-  {q:"How long does a website project take?",a:"Most projects take between 2 to 6 weeks depending on complexity. A simple landing page can be ready in under 2 weeks, while a full multi-page build may take 4–6 weeks. We always give you a clear timeline upfront."},
-  {q:"Do you work with clients outside Kerala?",a:"Absolutely! We work with clients across India and internationally. Most of our collaboration happens remotely via video calls, email, and shared project management tools."},
-  {q:"Will my website be mobile-friendly?",a:"Yes — every website we deliver is fully responsive and tested across all major devices and browsers. Mobile performance is always a top priority."},
-  {q:"Can I update the website myself after launch?",a:"Yes. We build on easy-to-use CMS platforms when needed, and we provide a handover walkthrough so you can manage content confidently without any coding knowledge."},
-  {q:"What happens after the website goes live?",a:"We offer post-launch support plans (1–6 months depending on your package) covering bug fixes, minor updates, and performance monitoring."},
-  {q:"Do you offer payment in instalments?",a:"Yes! We typically work with a 50% deposit to begin, and the remaining 50% on delivery. For larger projects we can arrange milestone-based payment schedules."},
-];
-const fl=document.getElementById("faqList");
-FAQS.forEach((f,i)=>{
-  const item=document.createElement("div");
-  item.className="faq-item fade-in";
-  item.style.transitionDelay=`${i*.07}s`;
-  item.innerHTML=`<div class="faq-q" onclick="toggleFaq(this)">${f.q}<span class="faq-icon">+</span></div>
-  <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
-  fl.appendChild(item);
-});
-function toggleFaq(el){const item=el.parentElement;const isOpen=item.classList.contains("open");document.querySelectorAll(".faq-item").forEach(x=>x.classList.remove("open"));if(!isOpen)item.classList.add("open");}
+  /* CURSOR */
+  const cur=document.getElementById('cursor');
+  const ring=document.getElementById('cursor-ring');
+  const lbl=document.getElementById('cursor-label');
+  let mx=0,my=0,rx=0,ry=0;
+  if(window.matchMedia('(pointer:fine)').matches){
+    document.addEventListener('mousemove',e=>{
+      mx=e.clientX;my=e.clientY;
+      cur.style.left=mx+'px';cur.style.top=my+'px';
+      lbl.style.left=mx+'px';lbl.style.top=(my+28)+'px';
+    });
+    const lerp=(a,b,t)=>a+(b-a)*t;
+    (function animR(){
+      rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);
+      ring.style.left=rx+'px';ring.style.top=ry+'px';
+      requestAnimationFrame(animR);
+    })();
+    document.querySelectorAll('.proj-media').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{lbl.style.opacity='1';lbl.style.transform='translate(-50%,-50%) scale(1)';cur.style.opacity='0';});
+      el.addEventListener('mouseleave',()=>{lbl.style.opacity='0';lbl.style.transform='translate(-50%,-50%) scale(.8)';cur.style.opacity='1';});
+    });
+    /* Magnetic buttons */
+    document.querySelectorAll('.btn,.btn-dark,.btn-ext,.btn-wa,.btn-submit,.pricing-cta').forEach(b=>{
+      b.addEventListener('mousemove',e=>{
+        const r=b.getBoundingClientRect();
+        b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.18}px)`;
+      });
+      b.addEventListener('mouseleave',()=>b.style.transform='');
+    });
+  }
 
-function sendForm(){
-  const n=document.getElementById("fname").value.trim();
-  const ph=document.getElementById("fphone").value.trim();
-  const e=document.getElementById("femail").value.trim();
-  const svc=document.getElementById("fservice").value;
-  const bud=document.getElementById("fbudget").value;
-  const m=document.getElementById("fmsg").value.trim();
-  if(!n||!ph||!m){showToast("Please fill Name, Phone & Message.");return;}
-  let msg=`Hi Nexigen Studios! 👋\n\n*New Enquiry*\n\n*Name:* ${n}\n*Phone:* ${ph}`;
-  if(e) msg+=`\n*Email:* ${e}`;
-  if(svc) msg+=`\n*Service:* ${svc}`;
-  if(bud) msg+=`\n*Budget:* ${bud}`;
-  msg+=`\n*Message:* ${m}`;
-  openWA(msg);
-}
+  /* SCROLL REVEAL */
+  function initReveal(){
+    if(!window.gsap){
+      document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity='1';el.style.transform='none';});
+      return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(el=>{
+      gsap.fromTo(el,{opacity:0,y:38},{
+        opacity:1,y:0,duration:.82,ease:'power3.out',
+        scrollTrigger:{trigger:el,start:'top 88%',once:true}
+      });
+    });
+    /* Hero lines */
+    document.querySelectorAll('.hero-headline .reveal').forEach((el,i)=>{
+      gsap.fromTo(el,{opacity:0,y:28},{opacity:1,y:0,duration:.65,delay:.28+i*.11,ease:'power3.out'});
+    });
+    /* Hero image parallax */
+    const hi=document.querySelector('.hero-img');
+    if(hi) gsap.to(hi,{yPercent:12,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+    /* Service image subtle parallax */
+    document.querySelectorAll('.svc-media-img').forEach(img=>{
+      gsap.fromTo(img,{yPercent:-4},{yPercent:4,ease:'none',scrollTrigger:{trigger:img.closest('.svc-panel'),start:'top bottom',end:'bottom top',scrub:true}});
+    });
+  }
 
-function subscribeNewsletter(){
-  const v=document.getElementById("nlEmail").value.trim();
-  if(!v||!v.includes("@")){showToast("Enter a valid email.");return;}
-  document.getElementById("nlEmail").value="";
-  showToast("🎉 Subscribed! Welcome aboard.");
-}
+  /* SMOOTH SCROLL */
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
 
-const obs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});
-},{threshold:.12});
-document.querySelectorAll(".fade-in").forEach(el=>obs.observe(el));
+  /* FAQ */
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.closest('.faq-item');
+      const isOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+      if(!isOpen){item.classList.add('open');btn.setAttribute('aria-expanded','true');}
+    });
+  });
 
-// WhatsApp float
-const wa=document.createElement("a");
-wa.href="https://wa.me/"+WA_NUM+"?text="+encodeURIComponent("Hi Nexigen Studios! I'd like to discuss a project.");
-wa.target="_blank";wa.rel="noopener noreferrer";
-wa.innerHTML=`<svg viewBox="0 0 32 32" width="28" height="28" fill="white"><path d="M16 .5C7.44.5.5 7.44.5 16c0 2.74.7 5.31 1.93 7.55L.5 31.5l8.18-1.91A15.45 15.45 0 0016 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28.3a13.72 13.72 0 01-7.01-1.92l-.5-.3-5.17 1.21 1.24-5.03-.33-.52A13.72 13.72 0 012.2 16C2.2 8.38 8.38 2.2 16 2.2S29.8 8.38 29.8 16 23.62 28.8 16 28.8zm7.52-10.27c-.41-.21-2.44-1.2-2.82-1.34-.38-.13-.65-.2-.93.21-.27.41-1.07 1.34-1.31 1.62-.24.27-.48.3-.9.1-.41-.21-1.74-.64-3.32-2.04-1.23-1.09-2.06-2.44-2.3-2.85-.24-.41-.03-.63.18-.84.19-.18.41-.48.62-.72.2-.24.27-.41.41-.69.14-.27.07-.51-.03-.72-.1-.21-.93-2.24-1.27-3.07-.34-.8-.68-.69-.93-.7h-.79c-.27 0-.72.1-1.1.51-.38.41-1.44 1.41-1.44 3.44s1.48 3.99 1.68 4.27c.21.27 2.9 4.43 7.03 6.21.98.42 1.75.67 2.34.86.98.31 1.88.27 2.58.16.79-.12 2.44-.99 2.78-1.96.34-.96.34-1.79.24-1.96-.1-.17-.37-.27-.79-.48z"/></svg>`;
-wa.style.cssText="position:fixed;bottom:28px;right:28px;z-index:999;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:transform .2s;text-decoration:none;";
-wa.onmouseenter=()=>{wa.style.transform="scale(1.1)"};
-wa.onmouseleave=()=>{wa.style.transform="scale(1)"};
-const ring=document.createElement("span");
-ring.style.cssText="position:absolute;inset:-6px;border-radius:50%;border:3px solid #25D366;animation:waPulse 2s ease-out infinite;pointer-events:none;";
-document.head.insertAdjacentHTML('beforeend','<style>@keyframes waPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}</style>');
-wa.appendChild(ring);
-document.body.appendChild(wa);
+  /* CONTACT FORM */
+  const FORM_ENDPOINT=null; /* Set to Formspree/EmailJS endpoint */
+  const form=document.getElementById('contact-form');
+  const formSuccess=document.getElementById('form-success');
+  const submitBtn=document.getElementById('submit-btn');
+
+  function vField(inp,errEl,msg){
+    const valid=inp.value.trim()&&(inp.type!=='email'||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value));
+    inp.classList.toggle('err',!valid);
+    const e=document.getElementById(errEl);
+    if(e) e.classList.toggle('show',!valid);
+    return !!valid;
+  }
+
+  if(form){
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      if(document.getElementById('hp').value) return;
+      const ok=[
+        vField(document.getElementById('full-name'),'full-name-err'),
+        vField(document.getElementById('phone'),'phone-err'),
+        (document.getElementById('project-type').value
+          ?(document.getElementById('project-type').classList.remove('err'),document.getElementById('project-type-err')&&document.getElementById('project-type-err').classList.remove('show'),true)
+          :(document.getElementById('project-type').classList.add('err'),document.getElementById('project-type-err')&&document.getElementById('project-type-err').classList.add('show'),false)),
+        vField(document.getElementById('message'),'message-err'),
+      ].every(Boolean);
+      if(!ok) return;
+      submitBtn.disabled=true; submitBtn.textContent='SENDING...';
+      if(FORM_ENDPOINT){
+        try{
+          await fetch(FORM_ENDPOINT,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+          form.style.display='none'; formSuccess.classList.add('show');
+        }catch{
+          submitBtn.disabled=false; submitBtn.textContent='SEND PROJECT ENQUIRY →';
+          alert('Something went wrong. Please try WhatsApp or email us directly.');
+        }
+      } else {
+        setTimeout(()=>{ form.style.display='none'; formSuccess.classList.add('show'); },850);
+      }
+    });
+    form.querySelectorAll('.form-input').forEach(inp=>{
+      inp.addEventListener('input',()=>{
+        inp.classList.remove('err');
+        const e=document.getElementById(inp.id+'-err');
+        if(e) e.classList.remove('show');
+      });
+    });
+  }
+
+})();
 </script>
 </body>
 </html>
